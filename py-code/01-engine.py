@@ -62,6 +62,7 @@ code = """
 result = engine.execute("select * from employee")
 for row in result:
     print(row)
+result.close()
 """
 heading = "The object 'result' is iterable."
 print_output(number, code, heading)
@@ -70,6 +71,7 @@ print_output(number, code, heading)
 result = engine.execute("select * from employee")
 for row in result:
     print(row)
+result.close()
 
 input("\nEnter to continue...")
 
@@ -83,6 +85,7 @@ code = """
 result = engine.execute("select * from employee")
 print(result.fetchall())
 print(result.fetchall())
+result.close()
 """
 heading = "Demonstrating - fetchall() returns a list of rows and exhausts \
 result."
@@ -91,6 +94,7 @@ print_output(number,code,heading)
 result = engine.execute("select * from employee")
 print(result.fetchall())
 print(result.fetchall())
+result.close()
 
 input("\nEnter to continue...")
 
@@ -117,6 +121,8 @@ result = engine.execute("insert into employee_of_month(emp_name) \
 values(:empname)", empname = 'fred')
 result = engine.execute("select * from employee_of_month")
 print(result.fetchall())
+result.close()
+
 input("\nEnter to continue...")
 
 ################################################################################
