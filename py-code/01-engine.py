@@ -1,6 +1,9 @@
 import os
 from sqlalchemy import create_engine
 
+#Restore the state of engine.db - prior to run
+os.system('git checkout -- engine.db')
+
 #Function to print heading and code
 def print_output(number,code,heading):
     os.system('clear')
@@ -9,7 +12,7 @@ def print_output(number,code,heading):
     print("_"*len(number_print))
     print("{}".format(code).rstrip('\n'))
     print("\n{}".format(heading))
-    print("-"*len(heading))
+    print("-"*len(heading.split('\n')[0]))
     return
 ################################################################################
 
@@ -104,29 +107,59 @@ input("\nEnter to continue...")
 #The execute() method auto commits for statements like INSERT, UPDATE, DELETE.
 number += 1
 code = """
-result = engine.execute("delete from employee_of_month where \
-emp_name = :empname", empname = 'fred')
 result = engine.execute("insert into employee_of_month(emp_name) \
 values(:empname)", empname = 'fred')
 result = engine.execute("select * from employee_of_month")
 print(result.fetchall())
-
-os.system('git checkout -- engine.db')
 """
 heading = "The execute() method auto commits for statements like INSERT, UPDATE\
  DELETE."
 print_output(number,code,heading)
 
-result = engine.execute("delete from employee_of_month where \
-emp_name = :empname", empname = 'fred')
 result = engine.execute("insert into employee_of_month(emp_name) \
 values(:empname)", empname = 'fred')
 result = engine.execute("select * from employee_of_month")
 print(result.fetchall())
 result.close()
 
-os.system('git checkout -- engine.db')
+input("\nEnter to continue...")
+
+################################################################################
+
+#6
+#Demonstrating using the engine.connect() to control the scope of the
+#connection and execute a transaction using begin() method of connect object.
+number += 1
+code = """
+connection = engine.connect()
+transaction = connection.begin()
+connection.execute("insert into employee (emp_name) values (:emp_name)",\
+emp_name = 'wendy' )
+connection.execute("update employee_of_month set emp_name = :emp_name", \
+emp_name = 'wendy')
+transaction.commit()
+connection.close()
+"""
+heading = "Demonstrating using the engine.connect() to control the scope of\n\
+the connection and execute a transaction using begin() method of connect\n\
+object."
+print_output(number,code,heading)
+
+connection = engine.connect()
+transaction = connection.begin()
+connection.execute("insert into employee (emp_name) values (:emp_name)",\
+emp_name = 'wendy' )
+connection.execute("update employee_of_month set emp_name = :emp_name", \
+emp_name = 'wendy')
+transaction.commit()
+connection.close()
+result = engine.execute("select * from employee")
+print(result.fetchall())
+result = engine.execute("select * from employee_of_month")
+print(result.fetchall())
 
 input("\nEnter to continue...")
 
 ################################################################################
+
+print("NOTE: RESET YOUR GIT : git checkout -- engine.db")
