@@ -209,4 +209,28 @@ input("\nEnter to continue...")
 
 ################################################################################
 
+#8
+#Exercise: Insert an employee - 'dilbert' and select all rows back.
+number += 1
+code = """
+result = engine.execute("insert into employee (emp_name) values (:emp_name)",\
+emp_name = 'dilbert')
+result = engine.execute("select * from employee")
+for row in result:
+    print(row)
+result.close()
+"""
+heading = "Exercise: Insert an employee - 'dilbert' and select all rows back."
+print_output(number,code,heading)
+
+result = engine.execute("insert into employee (emp_name) values (:emp_name)",\
+emp_name = 'dilbert')
+result = engine.execute("select * from employee")
+for row in result:
+    print(row)
+result.close()
+
+input("\nEnter to continue...")
+
+################################################################################
 print("NOTE: RESET YOUR GIT : git checkout -- engine.db")
