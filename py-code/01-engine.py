@@ -148,8 +148,8 @@ print(result.fetchall())
 result.close()
 """
 heading = "Demonstrating using the engine.connect() to control the scope of\n\
-the connection and execute a transaction using begin() method of connect\n\
-object."
+the connection and execute a transaction using begin() \n\
+method of connect object."
 print_output(number,code,heading)
 
 connection = engine.connect()
@@ -189,8 +189,8 @@ print(result.fetchall())
 result.close()
 """
 heading = "Demonstrates a context manager to begin a transaction on a \n\
-connection - which automatically commits the transaction and closes the \n\
-connection."
+connection - which automatically commits the transaction \n\
+and closes the connection."
 print_output(number,code,heading)
 
 with engine.begin() as connection:
