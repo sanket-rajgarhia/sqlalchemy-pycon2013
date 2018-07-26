@@ -145,6 +145,7 @@ result = engine.execute("select * from employee")
 print(result.fetchall())
 result = engine.execute("select * from employee_of_month")
 print(result.fetchall())
+result.close()
 """
 heading = "Demonstrating using the engine.connect() to control the scope of\n\
 the connection and execute a transaction using begin() method of connect\n\
@@ -164,6 +165,45 @@ result = engine.execute("select * from employee")
 print(result.fetchall())
 result = engine.execute("select * from employee_of_month")
 print(result.fetchall())
+result.close()
+
+input("\nEnter to continue...")
+
+################################################################################
+
+#7
+#Demonstrates a context manager to begin a transaction on a connection - which
+#automatically commits the transaction and closes the connection.
+number += 1
+code = """
+with engine.begin() as connection:
+    connection.execute("insert into employee (emp_name) values (:emp_name)",\
+    emp_name = 'mary')
+    connection.execute("update employee_of_month set emp_name = :emp_name",\
+    emp_name = 'mary')
+
+result = engine.execute("select * from employee")
+print(result.fetchall())
+result = engine.execute("select * from employee_of_month")
+print(result.fetchall())
+result.close()
+"""
+heading = "Demonstrates a context manager to begin a transaction on a \n\
+connection - which automatically commits the transaction and closes the \n\
+connection."
+print_output(number,code,heading)
+
+with engine.begin() as connection:
+    connection.execute("insert into employee (emp_name) values (:emp_name)",\
+    emp_name = 'mary')
+    connection.execute("update employee_of_month set emp_name = :emp_name",\
+    emp_name = 'mary')
+
+result = engine.execute("select * from employee")
+print(result.fetchall())
+result = engine.execute("select * from employee_of_month")
+print(result.fetchall())
+result.close()
 
 input("\nEnter to continue...")
 
