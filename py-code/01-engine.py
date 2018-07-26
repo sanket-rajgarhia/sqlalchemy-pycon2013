@@ -49,6 +49,7 @@ result.close()
 print("row : {}".format(row))
 print("row['emp_name'] : {}".format(row['emp_name']))
 print("row.emp_name : {}".format(row.emp_name))
+print("row.keys() : {}".format(row.keys()))
 
 input("\nEnter to continue...")
 
@@ -75,18 +76,47 @@ input("\nEnter to continue...")
 ################################################################################
 
 #4
-#Demonstrating fetchall() to fetch a list
+#Demonstrating fetchall() to fetch a list and result object gets exhausted.
+#Calling result.fetchall() returns an empty list.
 number += 1
 code = """
 result = engine.execute("select * from employee")
 print(result.fetchall())
+print(result.fetchall())
 """
-heading = "Demonstrating - fetchall() returns a list of rows"
+heading = "Demonstrating - fetchall() returns a list of rows and exhausts \
+result."
 print_output(number,code,heading)
 
 result = engine.execute("select * from employee")
 print(result.fetchall())
+print(result.fetchall())
 
+input("\nEnter to continue...")
+
+################################################################################
+
+#5
+#The execute() method auto commits for statements like INSERT, UPDATE, DELETE.
+number += 1
+code = """
+result = engine.execute("delete from employee_of_month where \
+emp_name = :empname", empname = 'fred')
+result = engine.execute("insert into employee_of_month(emp_name) \
+values(:empname)", empname = 'fred')
+result = engine.execute("select * from employee_of_month")
+print(result.fetchall())
+"""
+heading = "The execute() method auto commits for statements like INSERT, UPDATE\
+ DELETE."
+print_output(number,code,heading)
+
+result = engine.execute("delete from employee_of_month where \
+emp_name = :empname", empname = 'fred')
+result = engine.execute("insert into employee_of_month(emp_name) \
+values(:empname)", empname = 'fred')
+result = engine.execute("select * from employee_of_month")
+print(result.fetchall())
 input("\nEnter to continue...")
 
 ################################################################################
