@@ -139,6 +139,12 @@ connection.execute("update employee_of_month set emp_name = :emp_name", \
 emp_name = 'wendy')
 transaction.commit()
 connection.close()
+
+
+result = engine.execute("select * from employee")
+print(result.fetchall())
+result = engine.execute("select * from employee_of_month")
+print(result.fetchall())
 """
 heading = "Demonstrating using the engine.connect() to control the scope of\n\
 the connection and execute a transaction using begin() method of connect\n\
@@ -153,6 +159,7 @@ connection.execute("update employee_of_month set emp_name = :emp_name", \
 emp_name = 'wendy')
 transaction.commit()
 connection.close()
+
 result = engine.execute("select * from employee")
 print(result.fetchall())
 result = engine.execute("select * from employee_of_month")
