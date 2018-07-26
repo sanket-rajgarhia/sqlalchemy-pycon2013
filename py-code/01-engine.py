@@ -123,6 +123,7 @@ result = engine.execute("select * from employee_of_month")
 print(result.fetchall())
 result.close()
 
+os.system('git checkout -- engine.db')
 input("\nEnter to continue...")
 
 ################################################################################
