@@ -110,6 +110,8 @@ result = engine.execute("insert into employee_of_month(emp_name) \
 values(:empname)", empname = 'fred')
 result = engine.execute("select * from employee_of_month")
 print(result.fetchall())
+
+os.system('git checkout -- engine.db')
 """
 heading = "The execute() method auto commits for statements like INSERT, UPDATE\
  DELETE."
@@ -124,6 +126,7 @@ print(result.fetchall())
 result.close()
 
 os.system('git checkout -- engine.db')
+
 input("\nEnter to continue...")
 
 ################################################################################
