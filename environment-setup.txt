@@ -1,0 +1,33 @@
+1.  Install a python virtual environment:
+    $pip3 install virtualenv
+
+2.  Ensure that the virtual environment has been properly installed.
+    $virtualenv --version
+
+3.  Create a virtualenv
+    $virtualenv sqlalchemy-pycon2013
+
+4.  Go inside the virtualenv directory and activate it
+    $cd sqlalchemy-pycon2013
+    $source /bin/activate
+
+5.  Install sqlalchemy
+    $pip3 install sqlalchemy
+
+6.  Install termcolor
+    $pip3 install termcolor
+
+6.  To check if sqlalchemy has been properly installed:
+    $python3
+    >>>import sqlalchemy
+    >>>sqlalchemy.__version__
+    '1.2.10'
+    >>>exit()
+
+7.  Inside the virtualenv folder clone the git hub repository.
+    $ git clone "https://github.com/sanketrajgarhia/sqlalchemy-pycon2013.git"
+
+8.  DO NOT run py-code/setup.sql - It is just for documentation purposes only.
+
+9.  To exit virtualenv
+    $deactivate
