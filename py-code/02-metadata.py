@@ -3,8 +3,9 @@ from termcolor import colored, cprint
 
 from sqlalchemy import MetaData
 from sqlalchemy import Table, Column
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, ForeignKeyConstraint
 from sqlalchemy import Integer, String, DateTime, Numeric, Enum
+from sqlalchemy import Unicode, UnicodeText
 from sqlalchemy import create_engine
 
 #Restore the state of metadata.db - prior to run
@@ -130,16 +131,63 @@ Using the table object's create(engine) method to \n\
 create the table in the database."
 print_output(number,code,heading)
 
-address_table = Table('address',metadata,
-                      Column('id', Integer, primary_key = True),
-                      Column('email_address',String(100), nullable = False),
-                      Column('user_id', Integer, ForeignKey('user.id'))
-                      )
-address_table.create(engine)
+
 
 input("\nEnter to continue...")
 
 ################################################################################
+
+#5
+#Creating a table with Composite Foreign Key.
+#Using the table object's create(engine) method to create the table
+#in the database.
+number += 1
+code = """
+story_table = Table('story', metadata,
+                    Column('story_id', Integer, primary_key = True),
+                    Column('version_id', Integer, primary_key = True),
+                    Column('headline', Unicode(100), nullable = False),
+                    Column('body', UnicodeText)
+                    )
+
+published_table = Table('published', metadata,
+                        Column('pub_id', Integer, primary_key = True),
+                        Column('pub_timestamp', DataTime, nullable = false),
+                        Column('story_id', Integer),
+                        Column('version_id', Integer),
+                        ForeignKeyConstraint(
+                        ['story_id', 'version_id'],
+                        ['story.story_id','story.version_id'])
+                        )
+metadata.create_all(engine)
+"""
+heading = "Creating a table with Composite Foreign Key constraint.\n\
+Using the table object's create(engine) method to \n\
+create the table in the database."
+print_output(number,code,heading)
+
+story_table = Table('story', metadata,
+                    Column('story_id', Integer, primary_key = True),
+                    Column('version_id', Integer, primary_key = True),
+                    Column('headline', Unicode(100), nullable = False),
+                    Column('body', UnicodeText)
+                    )
+
+published_table = Table('published', metadata,
+                        Column('pub_id', Integer, primary_key = True),
+                        Column('pub_timestamp', DateTime, nullable = False),
+                        Column('story_id', Integer),
+                        Column('version_id', Integer),
+                        ForeignKeyConstraint(
+                        ['story_id', 'version_id'],
+                        ['story.story_id','story.version_id'])
+                        )
+metadata.create_all(engine)
+
+input("\nEnter to continue...")
+
+################################################################################
+
 os.system('clear')
 print("\n"* 5)
 cprint("END".rjust(38, " "), 'blue', attrs=['bold'])
