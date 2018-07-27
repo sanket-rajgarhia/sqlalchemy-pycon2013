@@ -248,7 +248,6 @@ print("inspector.get_columns('address') : {}"
       .format(inspector.get_columns('address')))
 print("inspector.get_foreign_keys('published') : {}"
       .format(inspector.get_foreign_keys('published')))
-
 """
 heading = "Reflection - Using inspect(engine) method."
 print_output(number,code,heading)
@@ -259,6 +258,38 @@ print("inspector.get_columns('address') : {}"
       .format(inspector.get_columns('address')))
 print("inspector.get_foreign_keys('published') : {}"
       .format(inspector.get_foreign_keys('published')))
+
+input("\nEnter to continue...")
+
+################################################################################
+
+#9
+#Exerice - Reflect 'network' table and display column names onlyself.
+#Using "inspector", print a list of all table names that include a column
+#called 'story_id'.
+
+number += 1
+code = """
+"""
+heading = "Exerice - Reflect 'network' table and display column names onlyself."
+heading += "\nUsing inspector, print a list of all table names that include"
+heading += "\na column called 'story_id'"
+print_output(number,code,heading)
+
+reflected_network_table = Table('network', metadata2,
+                                autoload = True, autoload_with = engine)
+for column in reflected_network_table.columns.keys():
+    print(column)
+
+output_title = "\nListing all tables that have the column - 'story_id'"
+print(output_title)
+print("-" * len(output_title))
+
+for tb in inspector.get_table_names():
+    for cl in inspector.get_columns(tb):
+        if cl['name'] == 'story_id':
+            print(tb)
+            break
 
 input("\nEnter to continue...")
 
