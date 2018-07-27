@@ -4,6 +4,7 @@ from termcolor import colored, cprint
 from sqlalchemy import MetaData
 from sqlalchemy import Table, Column
 from sqlalchemy import Integer, String
+from sqlalchemy import create_engine
 
 #Restore the state of metadata.db - prior to run
 os.system('git checkout -- metadata.db')
@@ -55,8 +56,29 @@ print("user_table.primary_key : {}".format(user_table.primary_key))
 print("user_table.select() : {}".format(user_table.select()))
 
 input("\nEnter to continue...")
+
 ################################################################################
 
+#1
+#Using the metadata.create_all(engine) method to create all tables in a schema.
+#If a table exists then it will not be created again.
+#Add the 'user' table to the schema.
+number += 1
+code = """
+engine = create_engine("sqlite:///metadata.db")
+metadata.create_all(engine)
+"""
+heading = "Using the metadata.create_all(engine) method to create all tables\n\
+in a schema.\nIf a table exists then it will not be created again.\n\
+Add the 'user' table to the schema."
+print_output(number,code,heading)
+
+engine = create_engine("sqlite:///metadata.db")
+metadata.create_all(engine)
+
+input("\nEnter to continue...")
+
+################################################################################
 os.system('clear')
 print("\n"* 5)
 cprint("END".rjust(38, " "), 'blue', attrs=['bold'])
