@@ -3,7 +3,7 @@ from termcolor import colored, cprint
 
 from sqlalchemy import MetaData
 from sqlalchemy import Table, Column
-from sqlalchemy import Integer, String
+from sqlalchemy import Integer, String, DateTime, Numeric, Enum
 from sqlalchemy import create_engine
 
 #Restore the state of metadata.db - prior to run
@@ -59,7 +59,7 @@ input("\nEnter to continue...")
 
 ################################################################################
 
-#1
+#2
 #Using the metadata.create_all(engine) method to create all tables in a schema.
 #If a table exists then it will not be created again.
 #Add the 'user' table to the schema.
@@ -79,6 +79,38 @@ metadata.create_all(engine)
 input("\nEnter to continue...")
 
 ################################################################################
+
+#3
+#Creating a table with different data types.
+#Using the table object's create(engine) method to
+number += 1
+code = """
+table_fancy = Table('fancy',metadata,
+                     Column(key, String(50), primary_key = True),
+                     Column(timestamp, DateTime),
+                     Column(amount, Integer(10,2)),
+                     Column(type, Enum('a', 'b', 'c'))
+                    )
+table_fancy.create(engine)
+print(table_fancy.create())
+"""
+heading = "Creating a table with different data types and using the table \n\
+object's create(engine) method to create the table\n\
+in the database."
+print_output(number,code,heading)
+
+table_fancy = Table('fancy',metadata,
+                     Column('key', String(50), primary_key = True),
+                     Column('timestamp', DateTime),
+                     Column('amount', Numeric(10,2)),
+                     Column('type', Enum('a', 'b', 'c'))
+                    )
+table_fancy.create(engine)
+
+input("\nEnter to continue...")
+
+################################################################################
+
 os.system('clear')
 print("\n"* 5)
 cprint("END".rjust(38, " "), 'blue', attrs=['bold'])
