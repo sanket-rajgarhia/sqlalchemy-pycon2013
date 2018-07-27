@@ -184,7 +184,7 @@ input("\nEnter to continue...")
 
 ################################################################################
 
-#5
+#6
 #Exercise - create the 'network' Table.
 number += 1
 code = """
@@ -206,6 +206,27 @@ network_table = Table('network', metadata,
                       Column('owner_id',Integer, ForeignKey('user.id'))
                      )
 metadata.create_all(engine)
+
+input("\nEnter to continue...")
+
+################################################################################
+
+#7
+#Reflection - Getting the 'user' Table from the database into python.
+number += 1
+code = """
+metadata2 = MetaData()
+user_reflected_table = Table('user',metadata2,
+                             autoload = True, autoload_with = engine)
+print(user_reflected_table)
+"""
+heading = "Reflection - Getting the 'user' Table from the database into python."
+print_output(number,code,heading)
+
+metadata2 = MetaData()
+user_reflected_table = Table('user',metadata2,
+                             autoload = True, autoload_with = engine)
+print(user_reflected_table.columns)
 
 input("\nEnter to continue...")
 
