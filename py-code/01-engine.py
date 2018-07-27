@@ -1,4 +1,5 @@
 import os
+from termcolor import colored, cprint
 from sqlalchemy import create_engine
 
 #Restore the state of engine.db - prior to run
@@ -233,4 +234,11 @@ result.close()
 input("\nEnter to continue...")
 
 ################################################################################
-print("NOTE: RESET YOUR GIT : git checkout -- engine.db")
+
+os.system('clear')
+print("\n"* 5)
+cprint("END".rjust(38, " "), 'blue', attrs=['bold'])
+heading = "NOTE: RESET YOUR GIT : git checkout -- engine.db"
+heading = heading.rjust(( len(heading) + ((80 - len(heading)) // 2)), " ")
+cprint('{}'.format(heading), 'red', attrs=['blink','bold'])
+print("\n"* 5)
