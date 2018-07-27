@@ -139,8 +139,6 @@ input("\nEnter to continue...")
 
 #5
 #Creating a table with Composite Foreign Key.
-#Using the table object's create(engine) method to create the table
-#in the database.
 number += 1
 code = """
 story_table = Table('story', metadata,
@@ -161,9 +159,7 @@ published_table = Table('published', metadata,
                         )
 metadata.create_all(engine)
 """
-heading = "Creating a table with Composite Foreign Key constraint.\n\
-Using the table object's create(engine) method to \n\
-create the table in the database."
+heading = "Creating a table with Composite Foreign Key constraint."
 print_output(number,code,heading)
 
 story_table = Table('story', metadata,
