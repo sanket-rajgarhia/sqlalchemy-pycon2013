@@ -114,7 +114,8 @@ input("\nEnter to continue...")
 
 #4
 #Creating a table with Foreign Key.
-#Using the table object's create(engine) method to
+#Using the table object's create(engine) method to create the table
+#in the database.
 number += 1
 code = """
 address_table = Table('address',metadata,
