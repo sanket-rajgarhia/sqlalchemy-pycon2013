@@ -184,6 +184,33 @@ input("\nEnter to continue...")
 
 ################################################################################
 
+#5
+#Exercise - create the 'network' Table.
+number += 1
+code = """
+network_table = Table('network', metadata,
+                      Column('network_id', Integer, primary_key = True),
+                      Column('name', String(100), nullable = False),
+                      Column('created_at', DateTime, nullable = False),
+                      Column('owner_id',Integer, ForeignKey('user.id'))
+                     )
+metadata.create_all(engine)
+"""
+heading = "Exercise - create the 'network' Table."
+print_output(number,code,heading)
+
+network_table = Table('network', metadata,
+                      Column('network_id', Integer, primary_key = True),
+                      Column('name', String(100), nullable = False),
+                      Column('created_at', DateTime, nullable = False),
+                      Column('owner_id',Integer, ForeignKey('user.id'))
+                     )
+metadata.create_all(engine)
+
+input("\nEnter to continue...")
+
+################################################################################
+
 os.system('clear')
 print("\n"* 5)
 cprint("END".rjust(38, " "), 'blue', attrs=['bold'])
