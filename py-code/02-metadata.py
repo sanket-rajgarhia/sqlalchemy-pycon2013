@@ -6,7 +6,7 @@ from sqlalchemy import Table, Column
 from sqlalchemy import ForeignKey, ForeignKeyConstraint
 from sqlalchemy import Integer, String, DateTime, Numeric, Enum
 from sqlalchemy import Unicode, UnicodeText
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, inspect
 
 #Restore the state of metadata.db - prior to run
 os.system('git checkout -- metadata.db')
@@ -121,7 +121,7 @@ number += 1
 code = """
 address_table = Table('address',metadata,
                       Column('id', Integer, primary_key = True),
-                      Column('email_address',String(100), nullable = False)
+                      Column('email_address',String(100), nullable = False),
                       Column('user_id', Integer, ForeignKey('user.id'))
                       )
 address_table.create(engine)
@@ -131,7 +131,12 @@ Using the table object's create(engine) method to \n\
 create the table in the database."
 print_output(number,code,heading)
 
-
+address_table = Table('address',metadata,
+                      Column('id', Integer, primary_key = True),
+                      Column('email_address',String(100), nullable = False),
+                      Column('user_id', Integer, ForeignKey('user.id'))
+                      )
+address_table.create(engine)
 
 input("\nEnter to continue...")
 
@@ -227,6 +232,33 @@ metadata2 = MetaData()
 user_reflected_table = Table('user',metadata2,
                              autoload = True, autoload_with = engine)
 print(user_reflected_table.columns)
+
+input("\nEnter to continue...")
+
+################################################################################
+
+#8
+#Reflection - Using inspect(engine) method.
+
+number += 1
+code = """
+inspector = inspect(engine)
+print("inspector.get_table_names() : {}".format(nspector.get_table_names()))
+print("inspector.get_columns('address') : {}"
+      .format(inspector.get_columns('address')))
+print("inspector.get_foreign_keys('published') : {}"
+      .format(inspector.get_foreign_keys('published')))
+
+"""
+heading = "Reflection - Using inspect(engine) method."
+print_output(number,code,heading)
+
+inspector = inspect(engine)
+print("inspector.get_table_names() : {}".format(inspector.get_table_names()))
+print("inspector.get_columns('address') : {}"
+      .format(inspector.get_columns('address')))
+print("inspector.get_foreign_keys('published') : {}"
+      .format(inspector.get_foreign_keys('published')))
 
 input("\nEnter to continue...")
 
