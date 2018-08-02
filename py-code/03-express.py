@@ -268,6 +268,53 @@ input("\nEnter to continue...")
 
 ################################################################################
 
+#7
+#Insert SQL statement.
+number += 1
+code = """
+print("insert into user (username,fullname) values ('ed', 'Ed Jones')")
+print('-' * 80)
+insert_stmt = user_table.insert().values(username='ed', fullname='Ed Jones')
+print(insert_stmt)
+connection = engine.connect()
+result = connection.execute(insert_stmt)
+
+print("result.inserted_primary_key : {}".format(result.inserted_primary_key))
+print('-' * 80)
+print("Multiple Insert")
+print('-' * 80)
+insert_stm = user_table.insert()
+print(insert_stm)
+result = connection.execute(insert_stm, [
+             {'username' : 'jack', 'fullname' : 'Jack Burger'},
+             {'username' : 'wendy', 'fullname' : 'Wendy Weathersmith'}])
+connection.close()
+"""
+heading = "Insert SQL statement."
+print_output(number,code,heading)
+
+print("insert into user (username,fullname) values ('ed', 'Ed Jones')")
+print('-' * 80)
+insert_stmt = user_table.insert().values(username='ed', fullname='Ed Jones')
+print(insert_stmt)
+connection = engine.connect()
+result = connection.execute(insert_stmt)
+
+print("result.inserted_primary_key : {}".format(result.inserted_primary_key))
+print('-' * 80)
+print("Multiple Insert")
+print('-' * 80)
+insert_stm = user_table.insert()
+print(insert_stm)
+result = connection.execute(insert_stm, [
+             {'username' : 'jack', 'fullname' : 'Jack Burger'},
+             {'username' : 'wendy', 'fullname' : 'Wendy Weathersmith'}])
+connection.close()
+
+input("\nEnter to continue...")
+
+################################################################################
+
 os.system('clear')
 print("\n"* 5)
 cprint("END".rjust(38, " "), 'blue', attrs=['bold'])
