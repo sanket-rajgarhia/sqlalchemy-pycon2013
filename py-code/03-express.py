@@ -409,17 +409,49 @@ input("\nEnter to continue...")
 
 ################################################################################
 
+#9
+#Exercise - 2.
+number += 1
+code = """
+"""
+heading = "Exercise - 2."
+print_output(number,code,heading)
+
+cprint("Insert Dilbert Jones into user table and fetch id.", 'red')
+print("-" * 80)
+statement = user_table.insert().values(username = 'dilbert',
+                                       fullname = 'Dilbert Jones')
+print(statement)
+connection = engine.connect()
+result = connection.execute(statement)
+print(result.inserted_primary_key)
+print("-" * 80)
+cprint("select from user table where username is 'wendy' OR 'dilbert'", 'red')
+print("-" * 80)
+statement = select([user_table]).where(
+            or_(user_table.c.username == 'wendy',
+                user_table.c.username == 'dilbert'))
+print(statement)
+result = connection.execute(statement)
+print(result.fetchall())
+
+connection.close()
+
+input("\nEnter to continue...")
+
+################################################################################
+
 #N
 #Section heading.
 number += 1
 code = """
 """
 heading = ""
+print_output(number,code,heading)
 
 input("\nEnter to continue...")
 
 ################################################################################
-
 
 os.system('clear')
 print("\n"* 5)
