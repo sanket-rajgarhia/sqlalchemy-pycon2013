@@ -6,6 +6,7 @@ from sqlalchemy import create_engine
 from sqlalchemy import Table
 from sqlalchemy import and_, or_
 from sqlalchemy.dialects import mysql, postgresql, sqlite
+from sqlalchemy import select
 
 #Restore the state of metadata.db - prior to run
 os.system('git checkout -- express.db')
@@ -314,6 +315,111 @@ connection.close()
 input("\nEnter to continue...")
 
 ################################################################################
+
+#8
+#SELECT statement.
+number += 1
+code = """
+cprint("Fetching selected columns and filtered by a where clause.", 'red' )
+print('-' * 80)
+statement = select([user_table.c.username, user_table.c.fullname])\
+.where(user_table.c.username == 'ed')
+print(statement)
+connection = engine.connect()
+result = connection.execute(statement)
+print('-' * 80)
+print(result.fetchall())
+print('-' * 80)
+
+cprint("Fetching the full table.", 'red')
+print('-' * 80)
+statement = select([user_table])
+print(statement)
+result = connection.execute(statement)
+print('-' * 80)
+print(result.fetchall())
+print('-' * 80)
+
+cprint("Two where() clauses are joined by an AND.", 'red')
+print('-' * 80)
+statement = select([user_table]).where(user_table.c.username == 'ed')\
+.where(user_table.c.fullname == 'Ed Jones')
+print(statement)
+result = connection.execute(statement)
+print('-' * 80)
+print(result.fetchall())
+print('-' * 80)
+
+cprint('Using order_by()', 'red')
+print("-" * 80)
+statement = select([user_table]).order_by(user_table.c.fullname)
+print(statement)
+result = connection.execute(statement)
+print('-' * 80)
+print(result.fetchall())
+print('-' * 80)
+
+connection.close()
+"""
+heading = "SELECT statement."
+print_output(number,code,heading)
+
+cprint("Fetching selected columns and filtered by a where clause.", 'red' )
+print('-' * 80)
+statement = select([user_table.c.username, user_table.c.fullname])\
+.where(user_table.c.username == 'ed')
+print(statement)
+connection = engine.connect()
+result = connection.execute(statement)
+print('-' * 80)
+print(result.fetchall())
+print('-' * 80)
+
+cprint("Fetching the full table.", 'red')
+print('-' * 80)
+statement = select([user_table])
+print(statement)
+result = connection.execute(statement)
+print('-' * 80)
+print(result.fetchall())
+print('-' * 80)
+
+cprint("Two where() clauses are joined by an AND.", 'red')
+print('-' * 80)
+statement = select([user_table]).where(user_table.c.username == 'ed')\
+.where(user_table.c.fullname == 'Ed Jones')
+print(statement)
+result = connection.execute(statement)
+print('-' * 80)
+print(result.fetchall())
+print('-' * 80)
+
+cprint('Using order_by()', 'red')
+print("-" * 80)
+statement = select([user_table]).order_by(user_table.c.fullname)
+print(statement)
+result = connection.execute(statement)
+print('-' * 80)
+print(result.fetchall())
+print('-' * 80)
+
+connection.close()
+
+input("\nEnter to continue...")
+
+################################################################################
+
+#N
+#Section heading.
+number += 1
+code = """
+"""
+heading = ""
+
+input("\nEnter to continue...")
+
+################################################################################
+
 
 os.system('clear')
 print("\n"* 5)
