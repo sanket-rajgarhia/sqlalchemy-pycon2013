@@ -77,7 +77,7 @@ heading += "\nconverted into a bound parameter."
 print_output(number,code,heading)
 
 print(user_table.c.username == 'ed')
-
+print(type(user_table.c.username == 'ed').__mro__)
 input("\nEnter to continue...")
 
 ################################################################################
