@@ -203,7 +203,6 @@ code = """
 statement = user_table.select().where(user_table.c.username == 'ed')
 print(statement)
 result = engine.execute(statement)
-result = engine.execute(statement)
 print(result.fetchall())
 """
 heading = "Using expressions in select statement."
