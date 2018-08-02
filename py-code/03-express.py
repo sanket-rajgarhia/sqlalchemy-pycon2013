@@ -62,6 +62,26 @@ input("\nEnter to continue...")
 
 ################################################################################
 
+#2
+#Comparison operators in SQL Expression do not yeild a True or False.
+#It results in an object with the value at the end of == being converted into
+#a bound parameter.
+
+number += 1
+code = """
+print(user_table.c.username == 'ed')
+"""
+heading = "Comparison operators in SQL Expression do not yeild a True or False."
+heading += "\nIt results in an object with the value at the end of == being "
+heading += "\nconverted into a bound parameter."
+print_output(number,code,heading)
+
+print(user_table.c.username == 'ed')
+
+input("\nEnter to continue...")
+
+################################################################################
+
 os.system('clear')
 print("\n"* 5)
 cprint("END".rjust(38, " "), 'blue', attrs=['bold'])
