@@ -5,6 +5,7 @@ from sqlalchemy import MetaData
 from sqlalchemy import create_engine
 from sqlalchemy import Table
 from sqlalchemy import and_, or_
+from sqlalchemy.dialects import mysql, postgresql, sqlite
 
 #Restore the state of metadata.db - prior to run
 os.system('git checkout -- express.db')
@@ -131,6 +132,42 @@ print(user_table.c.username.in_(["wendy", "mary", "ed"]))
 input("\nEnter to continue...")
 
 ################################################################################
+
+#4
+#Building expressions using SQL Expression.
+number += 1
+code = """
+"""
+heading = "Building expressions using SQL Expression."
+print_output(number,code,heading)
+
+#Dialect differences
+print("Dialect Differences.")
+print("-" * 80)
+expression = user_table.c.username == 'ed'
+print(expression.compile(dialect=mysql.dialect()))
+print(expression.compile(dialect=postgresql.dialect()))
+print(expression.compile(dialect=sqlite.dialect()))
+print("-" * 80)
+#Expressions as an object - BinaryExpression object.
+print("Expression as an object - BinaryExpression object.")
+print("-" * 80)
+print("expression : {}".format(expression))
+print("type(expression) : {}".format(type(expression)))
+print("expression.left : {}".format(expression.left))
+print("expression.right : {}".format(expression.right))
+print("expression.operator : {}".format(expression.operator))
+print("-" * 80)
+#Compiling expressions
+print("Parameters of expressions")
+print("-" * 80)
+expression2 = user_table.c.username.in_(["wendy", "mary", "ed"])
+compiled=expression2.compile()
+print("expression2 : {}".format(expression2))
+print("xpression2.compile().params : {}".format(compiled.params))
+print("-" * 80)
+
+input("\nEnter to continue...")
 
 ################################################################################
 
