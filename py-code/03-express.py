@@ -87,6 +87,24 @@ input("\nEnter to continue...")
 #Building expressions using SQL Expression.
 number += 1
 code = """
+#Conjunctions
+print((user_table.c.username == 'ed') | (user_table.c.username == 'jack'))
+#Import and_ and or_ and build conjuctions
+print(and_(user_table.c.fullname == 'ed jones',
+       or_(user_table.c.username == 'ed', user_table.c.username == 'jack')
+          )
+     )
+#Comparison operator
+print(user_table.c.id > 5)
+#NULL and IS NOT NULL - Import is_
+print(user_table.c.username == None)
+print(user_table.c.username != None)
+print(user_table.c.username.is_(None))
+#Addition and string concatenation
+print(user_table.c.id + 5)
+print(user_table.c.fullname + "Family name")
+#IN
+print(user_table.c.username.in_(["wendy", "mary", "ed"]))
 """
 heading = "Building expressions using SQL Expression."
 print_output(number,code,heading)
@@ -111,6 +129,8 @@ print(user_table.c.fullname + "Family name")
 print(user_table.c.username.in_(["wendy", "mary", "ed"]))
 
 input("\nEnter to continue...")
+
+################################################################################
 
 ################################################################################
 
