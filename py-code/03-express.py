@@ -85,7 +85,7 @@ input("\nEnter to continue...")
 ################################################################################
 
 #3
-#Building expressions using SQL Expression.
+#Building expressions using SQL Expression - 1.
 number += 1
 code = """
 #Conjunctions
@@ -134,9 +134,34 @@ input("\nEnter to continue...")
 ################################################################################
 
 #4
-#Building expressions using SQL Expression.
+#Building expressions using SQL Expression - 2.
 number += 1
 code = """
+#Dialect differences
+print("Dialect Differences.")
+print("-" * 80)
+expression = user_table.c.username == 'ed'
+print(expression.compile(dialect=mysql.dialect()))
+print(expression.compile(dialect=postgresql.dialect()))
+print(expression.compile(dialect=sqlite.dialect()))
+print("-" * 80)
+#Expressions as an object - BinaryExpression object.
+print("Expression as an object - BinaryExpression object.")
+print("-" * 80)
+print("expression : {}".format(expression))
+print("type(expression) : {}".format(type(expression)))
+print("expression.left : {}".format(expression.left))
+print("expression.right : {}".format(expression.right))
+print("expression.operator : {}".format(expression.operator))
+print("-" * 80)
+#Compiling expressions
+print("Parameters of expressions")
+print("-" * 80)
+expression2 = user_table.c.username.in_(["wendy", "mary", "ed"])
+compiled=expression2.compile()
+print("expression2 : {}".format(expression2))
+print("xpression2.compile().params : {}".format(compiled.params))
+print("-" * 80)
 """
 heading = "Building expressions using SQL Expression."
 print_output(number,code,heading)
@@ -166,6 +191,28 @@ compiled=expression2.compile()
 print("expression2 : {}".format(expression2))
 print("xpression2.compile().params : {}".format(compiled.params))
 print("-" * 80)
+
+input("\nEnter to continue...")
+
+################################################################################
+
+#4
+#Using expressions in select statement.
+number += 1
+code = """
+statement = user_table.select().where(user_table.c.username == 'ed')
+print(statement)
+result = engine.execute(statement)
+result = engine.execute(statement)
+print(result.fetchall())
+"""
+heading = "Using expressions in select statement."
+print_output(number,code,heading)
+
+statement = user_table.select().where(user_table.c.username == 'ed')
+print(statement)
+result = engine.execute(statement)
+print(result.fetchall())
 
 input("\nEnter to continue...")
 
