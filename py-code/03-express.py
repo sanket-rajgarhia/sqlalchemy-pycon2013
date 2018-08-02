@@ -196,7 +196,7 @@ input("\nEnter to continue...")
 
 ################################################################################
 
-#4
+#5
 #Using expressions in select statement.
 number += 1
 code = """
@@ -212,6 +212,57 @@ statement = user_table.select().where(user_table.c.username == 'ed')
 print(statement)
 result = engine.execute(statement)
 print(result.fetchall())
+
+input("\nEnter to continue...")
+
+################################################################################
+
+#6
+#Exercise
+number += 1
+code = """
+print("Expression for : user.fullname = 'ed'")
+expression1 = user_table.c.fullname == 'ed'
+print(expression1)
+print("Expression for : user.fullname = 'ed' AND user.id > 5  ")
+expression2 = and_(user_table.c.fullname == 'ed', user_table.c.id > 5)
+print(expression2)
+print("Expression for : user.username = 'edward' OR \
+(user.fullname = 'ed' AND user.id > 5) ")
+expression3 = or_(user_table.c.username == 'edward',
+              and_(user_table.c.fullname == 'ed', user_table.c.id > 5))
+print(expression3)
+note="NOTE: NO brackets surrounding the AND clause is required since it has \
+\nhigher precedence than OR and executes first in the above listed query."
+cprint(note, 'red', attrs=['bold'])
+print("Expression for : user.username = 'edward' AND \
+(user.fullname = 'ed' OR user.id > 5) ")
+expression4 = and_(user_table.c.username == 'edward',
+              or_(user_table.c.fullname == 'ed', user_table.c.id > 5))
+print(expression4)
+"""
+heading = "Exercise."
+print_output(number,code,heading)
+
+print("Expression for : user.fullname = 'ed'")
+expression1 = user_table.c.fullname == 'ed'
+print(expression1)
+print("Expression for : user.fullname = 'ed' AND user.id > 5  ")
+expression2 = and_(user_table.c.fullname == 'ed', user_table.c.id > 5)
+print(expression2)
+print("Expression for : user.username = 'edward' OR \
+(user.fullname = 'ed' AND user.id > 5) ")
+expression3 = or_(user_table.c.username == 'edward',
+              and_(user_table.c.fullname == 'ed', user_table.c.id > 5))
+print(expression3)
+note="NOTE: NO brackets surrounding the AND clause is required since it has \
+\nhigher precedence than OR and executes first in the above listed query."
+cprint(note, 'red', attrs=['bold'])
+print("Expression for : user.username = 'edward' AND \
+(user.fullname = 'ed' OR user.id > 5) ")
+expression4 = and_(user_table.c.username == 'edward',
+              or_(user_table.c.fullname == 'ed', user_table.c.id > 5))
+print(expression4)
 
 input("\nEnter to continue...")
 
