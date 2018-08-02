@@ -4,6 +4,7 @@ from termcolor import colored, cprint
 from sqlalchemy import MetaData
 from sqlalchemy import create_engine
 from sqlalchemy import Table
+from sqlalchemy import and_, or_
 
 #Restore the state of metadata.db - prior to run
 os.system('git checkout -- express.db')
@@ -78,6 +79,37 @@ print_output(number,code,heading)
 
 print(user_table.c.username == 'ed')
 print(type(user_table.c.username == 'ed').__mro__)
+input("\nEnter to continue...")
+
+################################################################################
+
+#3
+#Building expressions using SQL Expression.
+number += 1
+code = """
+"""
+heading = "Building expressions using SQL Expression."
+print_output(number,code,heading)
+
+#Conjunctions
+print((user_table.c.username == 'ed') | (user_table.c.username == 'jack'))
+#Import and_ and or_ and build conjuctions
+print(and_(user_table.c.fullname == 'ed jones',
+       or_(user_table.c.username == 'ed', user_table.c.username == 'jack')
+          )
+     )
+#Comparison operator
+print(user_table.c.id > 5)
+#NULL and IS NOT NULL - Import is_
+print(user_table.c.username == None)
+print(user_table.c.username != None)
+print(user_table.c.username.is_(None))
+#Addition and string concatenation
+print(user_table.c.id + 5)
+print(user_table.c.fullname + "Family name")
+#IN
+print(user_table.c.username.in_(["wendy", "mary", "ed"]))
+
 input("\nEnter to continue...")
 
 ################################################################################
