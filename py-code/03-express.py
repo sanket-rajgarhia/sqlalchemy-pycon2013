@@ -538,6 +538,12 @@ input("\nEnter to continue...")
 #The select() returns a selectable. It is like a temporary table.
 number += 1
 code = """
+sel_stmt = select([user_table])
+filtered_stmt = select([sel_stmt.c.id, sel_stmt.c.username]).where(
+                sel_stmt.c.id > 2)
+print(filtered_stmt)
+result = engine.execute(filtered_stmt)
+print(result.fetchall())
 """
 heading = "The select() returns a selectable. It is like a temporary table."
 print_output(number,code,heading)
@@ -564,6 +570,7 @@ print_output(number,code,heading)
 input("\nEnter to continue...")
 
 ################################################################################
+
 os.system('clear')
 print("\n"* 5)
 cprint("END".rjust(38, " "), 'blue', attrs=['bold'])
