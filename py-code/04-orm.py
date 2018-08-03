@@ -286,6 +286,7 @@ session.close()
 input("\nEnter to continue...")
 
 ################################################################################
+
 os.system('clear')
 print("\n"* 5)
 cprint("END".rjust(38, " "), 'blue', attrs=['bold'])
