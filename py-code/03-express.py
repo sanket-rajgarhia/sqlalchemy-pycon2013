@@ -8,6 +8,7 @@ from sqlalchemy import Integer, String
 from sqlalchemy import and_, or_
 from sqlalchemy.dialects import mysql, postgresql, sqlite
 from sqlalchemy import select, func
+from sqlalchemy.sql.expression import cast
 
 #Restore the state of metadata.db - prior to run
 os.system('git checkout -- express.db')
@@ -705,6 +706,45 @@ print(select_stmt)
 print("-" * 80)
 result = engine.execute(select_stmt)
 print(result.fetchall())
+
+input("\nEnter to continue...")
+
+################################################################################
+
+#17
+#Update a table using SQL Expression's update() and cast().
+number += 1
+code = """
+update_stmt = address_table.update().values(email_address='jack@msn.com').where(
+address_table.c.email_address == 'jack@yahoo.com')
+print(update_stmt)
+result = engine.execute(update_stmt)
+print("result.rowcount : {}".format(result.rowcount))
+print("-" * 80)
+
+update_stmt = user_table.update().values(fullname =
+user_table.c.fullname + " - " + cast(user_table.c.id,String)).where(
+user_table.c.username == 'ed')
+print(update_stmt)
+result = engine.execute(update_stmt)
+print("result.rowcount : {}".format(result.rowcount))
+"""
+heading = "Update a table using SQL Expression's update() and cast()."
+print_output(number,code,heading)
+
+update_stmt = address_table.update().values(email_address='jack@msn.com').where(
+address_table.c.email_address == 'jack@yahoo.com')
+print(update_stmt)
+result = engine.execute(update_stmt)
+print("result.rowcount : {}".format(result.rowcount))
+print("-" * 80)
+
+update_stmt = user_table.update().values(fullname =
+user_table.c.fullname + " - " + cast(user_table.c.id,String)).where(
+user_table.c.username == 'ed')
+print(update_stmt)
+result = engine.execute(update_stmt)
+print("result.rowcount : {}".format(result.rowcount))
 
 input("\nEnter to continue...")
 
