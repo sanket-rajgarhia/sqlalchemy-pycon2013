@@ -23,6 +23,8 @@ def print_output(number,code,heading):
 #Creating the 'Declarative Base'.
 number = 1
 code = """
+Base = declarative_base()
+print(Base.metadata)
 """
 heading = "#Creating the 'Declarative Base'."
 print_output(number,code,heading)
