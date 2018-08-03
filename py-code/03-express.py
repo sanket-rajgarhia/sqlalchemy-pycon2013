@@ -534,6 +534,25 @@ input("\nEnter to continue...")
 
 ################################################################################
 
+#12
+#The select() returns a selectable. It is like a temporary table.
+number += 1
+code = """
+"""
+heading = "The select() returns a selectable. It is like a temporary table."
+print_output(number,code,heading)
+
+sel_stmt = select([user_table])
+filtered_stmt = select([sel_stmt.c.id, sel_stmt.c.username]).where(
+                sel_stmt.c.id > 2)
+print(filtered_stmt)
+result = engine.execute(filtered_stmt)
+print(result.fetchall())
+
+input("\nEnter to continue...")
+
+################################################################################
+
 #N
 #Section heading.
 number += 1
