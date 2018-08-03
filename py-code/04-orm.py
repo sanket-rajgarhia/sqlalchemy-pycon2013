@@ -122,8 +122,6 @@ input("\nEnter to continue...")
 
 ################################################################################
 
-################################################################################
-
 #4
 #Inserting multiple rows into the table.
 number += 1
@@ -196,6 +194,80 @@ input("\nEnter to continue...")
 
 ################################################################################
 
+#5
+#Modifying a domain model object makes it dirty. session.rollback().
+number += 1
+code = """
+session = Session(engine)
+user_ed = session.query(User).filter_by(name = 'ed').first()
+print(user_ed.id, user_ed.name, user_ed.fullname)
+print("Updating the domain object - makes it dirty.")
+user_ed.name = "eddie"
+print("session.dirty : {}".format(session.dirty))
+print("-" * 80)
+print("Creating a fake user.")
+fake_user = User(name = 'fake', fullname = 'Invalid')
+session.add(fake_user)
+print("session.new : {}".format(session.new))
+print("Creating a query - flushes all pending and dirty objects to the \
+database.")
+mary_user = session.query(User).filter_by(name = 'mary').first()
+print("Output of query : {} {}".format(mary_user.id, mary_user.fullname))
+print("session.new : {}  session.dirty : {}".format(session.new, session.dirty))
+print("-" * 80)
+print("Fetching all records in User table.")
+print("-" * 80)
+user_table = session.query(User).all()
+for row in user_table:
+    print(row)
+print("-" * 80)
+print("Rolling back - session.rollback()")
+session.rollback()
+print("-" * 80)
+print("Fetching all records in User table after rollback")
+user_table = session.query(User).all()
+for row in user_table:
+    print(row)
+session.close()
+"""
+heading = "Modifying a domain model object makes it dirty. session.rollback()."
+print_output(number,code,heading)
+
+session = Session(engine)
+user_ed = session.query(User).filter_by(name = 'ed').first()
+print(user_ed.id, user_ed.name, user_ed.fullname)
+print("Updating the domain object - makes it dirty.")
+user_ed.name = "eddie"
+print("session.dirty : {}".format(session.dirty))
+print("-" * 80)
+print("Creating a fake user.")
+fake_user = User(name = 'fake', fullname = 'Invalid')
+session.add(fake_user)
+print("session.new : {}".format(session.new))
+print("Creating a query - flushes all pending and dirty objects to the \
+database.")
+mary_user = session.query(User).filter_by(name = 'mary').first()
+print("Output of query : {} {}".format(mary_user.id, mary_user.fullname))
+print("session.new : {}  session.dirty : {}".format(session.new, session.dirty))
+print("-" * 80)
+print("Fetching all records in User table.")
+print("-" * 80)
+user_table = session.query(User).all()
+for row in user_table:
+    print(row)
+print("-" * 80)
+print("Rolling back - session.rollback()")
+session.rollback()
+print("-" * 80)
+print("Fetching all records in User table after rollback")
+user_table = session.query(User).all()
+for row in user_table:
+    print(row)
+session.close()
+
+input("\nEnter to continue...")
+
+################################################################################
 os.system('clear')
 print("\n"* 5)
 cprint("END".rjust(38, " "), 'blue', attrs=['bold'])
