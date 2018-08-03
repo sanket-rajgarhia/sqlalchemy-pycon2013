@@ -35,3 +35,11 @@ print(Base.metadata)
 input("\nEnter to continue...")
 
 ################################################################################
+
+os.system('clear')
+print("\n"* 5)
+cprint("END".rjust(38, " "), 'blue', attrs=['bold'])
+heading = "NOTE: RESET YOUR GIT : git checkout -- orm.db"
+heading = heading.rjust(( len(heading) + ((80 - len(heading)) // 2)), " ")
+cprint('{}'.format(heading), 'red', attrs=['blink','bold'])
+print("\n"* 5)
