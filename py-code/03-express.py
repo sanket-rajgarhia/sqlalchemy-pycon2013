@@ -483,6 +483,38 @@ input("\nEnter to continue...")
 
 ################################################################################
 
+#11
+#Demonstrating joins.
+number += 1
+code = """
+"""
+heading = "Demonstrating joins."
+print_output(number,code,heading)
+
+print("table1.join(table2,on clause)")
+print("-" * 80)
+join_clause1 = user_table.join(address_table,
+                              user_table.c.id == address_table.c.user_id)
+print(join_clause1)
+print("-" * 80)
+print("table1.join(table2) - ON clause automatically figured out")
+print("due to Foreign Key relationship between table2 and table1")
+print("-" * 80)
+join_clause2 = user_table.join(address_table)
+print(join_clause2)
+print("-" * 80)
+
+print("Using select_from() to connect the join clause to a select statement.")
+print("-" * 80)
+select_stmt = select([user_table, address_table]).select_from(join_clause2)
+print(select_stmt)
+result = engine.execute(select_stmt)
+print(result.fetchall())
+
+input("\nEnter to continue...")
+
+################################################################################
+
 #N
 #Section heading.
 number += 1
@@ -494,7 +526,6 @@ print_output(number,code,heading)
 input("\nEnter to continue...")
 
 ################################################################################
-
 os.system('clear')
 print("\n"* 5)
 cprint("END".rjust(38, " "), 'blue', attrs=['bold'])
