@@ -559,6 +559,45 @@ input("\nEnter to continue...")
 
 ################################################################################
 
+#13
+#A subquery is same as an alias of select().
+number += 1
+code = """
+select_stmt = select([user_table]).where(
+                                   user_table.c.username.in_(['ed','jack']))
+print(select_stmt)
+print("-" * 80)
+select_alias = select_stmt.alias()
+print(select_alias)
+print("-" * 80)
+select_from_alias = select([select_alias.c.id, select_alias.c.fullname]).where(
+                    select_alias.c.username == "ed")
+print(select_from_alias)
+print("-" * 80)
+result = engine.execute(select_from_alias)
+print(result.fetchall())
+"""
+heading = "A subquery is same as an alias of select()."
+print_output(number,code,heading)
+
+select_stmt = select([user_table]).where(
+                                   user_table.c.username.in_(['ed','jack']))
+print(select_stmt)
+print("-" * 80)
+select_alias = select_stmt.alias()
+print(select_alias)
+print("-" * 80)
+select_from_alias = select([select_alias.c.id, select_alias.c.fullname]).where(
+                    select_alias.c.username == "ed")
+print(select_from_alias)
+print("-" * 80)
+result = engine.execute(select_from_alias)
+print(result.fetchall())
+
+input("\nEnter to continue...")
+
+################################################################################
+
 #N
 #Section heading.
 number += 1
