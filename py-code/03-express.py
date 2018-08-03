@@ -3,7 +3,8 @@ from termcolor import colored, cprint
 
 from sqlalchemy import MetaData
 from sqlalchemy import create_engine
-from sqlalchemy import Table
+from sqlalchemy import Table, Column, ForeignKey
+from sqlalchemy import Integer, String
 from sqlalchemy import and_, or_
 from sqlalchemy.dialects import mysql, postgresql, sqlite
 from sqlalchemy import select
@@ -436,6 +437,47 @@ result = connection.execute(statement)
 print(result.fetchall())
 
 connection.close()
+
+input("\nEnter to continue...")
+
+################################################################################
+
+#10
+#Creation of Address table and insertion of values.
+number += 1
+code = """
+address_table = Table('address', metadata,
+            Column('id', Integer, primary_key = True),
+            Column('user_id', Integer, ForeignKey('user.id'), nullable = False),
+            Column('email_address', String(100),nullable = False))
+address_table.create(engine)
+
+result = engine.execute(address_table.insert(),[
+        {"user_id": 1, "email_address": "ed@ed.com"},
+        {"user_id": 1, "email_address": "ed@gmail.com"},
+        {"user_id": 2, "email_address": "jack@yahoo.com"},
+        {"user_id": 3, "email_address": "wendy@gmail.com"}])
+
+result = engine.execute(select([address_table]))
+print(result.fetchall())
+"""
+heading = "Creation of Address table and insertion of values."
+print_output(number,code,heading)
+
+address_table = Table('address', metadata,
+            Column('id', Integer, primary_key = True),
+            Column('user_id', Integer, ForeignKey('user.id'), nullable = False),
+            Column('email_address', String(100),nullable = False))
+address_table.create(engine)
+
+result = engine.execute(address_table.insert(),[
+        {"user_id": 1, "email_address": "ed@ed.com"},
+        {"user_id": 1, "email_address": "ed@gmail.com"},
+        {"user_id": 2, "email_address": "jack@yahoo.com"},
+        {"user_id": 3, "email_address": "wendy@gmail.com"}])
+
+result = engine.execute(select([address_table]))
+print(result.fetchall())
 
 input("\nEnter to continue...")
 
