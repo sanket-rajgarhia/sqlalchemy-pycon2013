@@ -7,7 +7,7 @@ from sqlalchemy import Table, Column, ForeignKey
 from sqlalchemy import Integer, String
 from sqlalchemy import and_, or_
 from sqlalchemy.dialects import mysql, postgresql, sqlite
-from sqlalchemy import select
+from sqlalchemy import select, func
 
 #Restore the state of metadata.db - prior to run
 os.system('git checkout -- express.db')
@@ -598,6 +598,87 @@ input("\nEnter to continue...")
 
 ################################################################################
 
+#14
+#Scalar select and group_by().
+number += 1
+code = """
+"""
+heading = "Scalar select and group_by()."
+print_output(number,code,heading)
+
+select_stmt = select([address_table.c.user_id,
+                      func.count(address_table.c.id).label('count')]).group_by(
+                      address_table.c.user_id)
+print(select_stmt)
+print("-" * 80)
+result = engine.execute(select_stmt)
+print(result.fetchall())
+print("-" * 80)
+select_alias = select_stmt.alias()
+address_select = select([select_alias.c.count]).where(
+                 select_alias.c.user_id == 1)
+print(address_select)
+print("-" * 80)
+result = engine.execute(address_select)
+print(result.fetchall())
+
+input("\nEnter to continue...")
+
+################################################################################
+
+#15
+#Scalar select as a column in a select.Use of as_scalar().
+number += 1
+code = """
+subq_address = select([address_table.c.user_id,
+                      func.count(address_table.c.id).label('count')]).group_by(
+                      address_table.c.user_id).alias()
+select_stmt = select([user_table.c.fullname,
+                      subq_address.c.count]).select_from(
+                      user_table.join(subq_address))
+print(select_stmt)
+result = engine.execute(select_stmt)
+print(result.fetchall())
+print("-" * 80)
+subq_address = select([func.count(address_table.c.id)]).where(
+                      user_table.c.id == address_table.c.user_id)
+print(subq_address)
+result = engine.execute(subq_address)
+print(result.fetchall())
+print("-" * 80)
+scalar_sel = select([user_table.c.fullname, subq_address.as_scalar()])
+print(scalar_sel)
+result = engine.execute(scalar_sel)
+print(result.fetchall())
+"""
+heading = "Scalar select as a column in a select.Use of as_scalar()."
+print_output(number,code,heading)
+
+subq_address = select([address_table.c.user_id,
+                      func.count(address_table.c.id).label('count')]).group_by(
+                      address_table.c.user_id).alias()
+select_stmt = select([user_table.c.fullname,
+                      subq_address.c.count]).select_from(
+                      user_table.join(subq_address))
+print(select_stmt)
+result = engine.execute(select_stmt)
+print(result.fetchall())
+print("-" * 80)
+subq_address = select([func.count(address_table.c.id)]).where(
+                      user_table.c.id == address_table.c.user_id)
+print(subq_address)
+result = engine.execute(subq_address)
+print(result.fetchall())
+print("-" * 80)
+scalar_sel = select([user_table.c.fullname, subq_address.as_scalar()])
+print(scalar_sel)
+result = engine.execute(scalar_sel)
+print(result.fetchall())
+
+input("\nEnter to continue...")
+
+################################################################################
+
 #N
 #Section heading.
 number += 1
@@ -609,7 +690,6 @@ print_output(number,code,heading)
 input("\nEnter to continue...")
 
 ################################################################################
-
 os.system('clear')
 print("\n"* 5)
 cprint("END".rjust(38, " "), 'blue', attrs=['bold'])
