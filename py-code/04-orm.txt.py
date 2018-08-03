@@ -122,6 +122,70 @@ input("\nEnter to continue...")
 
 ################################################################################
 
+################################################################################
+
+#4
+#Inserting multiple rows into the table.
+number += 1
+code = """
+session = Session(engine)
+wendy_user = User(name = 'wendy', fullname = 'Wendy Weathersmith')
+session.add(wendy_user)
+
+session.add_all([
+    User(name = 'mary', fullname = 'Mary Contrary'),
+    User(name = 'fred', fullname = 'Fred Flintstone')
+])
+
+print("Pending user list not yet flushed : {}".format(session.new))
+
+our_user = session.query(User).filter_by(name = 'wendy').first()
+print(our_user.id, our_user.name, our_user.fullname)
+
+print("Pending user list after fetching using a query : {}".format(session.new))
+print("wendy_user = our_user : {}".format(wendy_user == our_user))
+print("id(wendy_user) id(our_user): {} {}".format(id(wendy_user), id(our_user)))
+
+session.commit()
+"""
+heading = "Inserting multiple rows into the table. "
+print_output(number,code,heading)
+
+print("Creating a session using - session = Session(engine)")
+session = Session(engine)
+
+print("Adding User objects to the session - using session.add_all([ U1, U2])")
+wendy_user = User(name = 'wendy', fullname = 'Wendy Weathersmith')
+session.add(wendy_user)
+
+session.add_all([
+    User(name = 'mary', fullname = 'Mary Contrary'),
+    User(name = 'fred', fullname = 'Fred Flintstone')
+])
+
+print("Pending user list not yet flushed : {}".format(session.new))
+
+print("A query to the table flushes the pending entries to the database")
+print("before fetching new data.")
+our_user = session.query(User).filter_by(name = 'wendy').first()
+
+print("Data Fetched for User whose name = 'wendy'")
+print(our_user.id, our_user.name, our_user.fullname)
+
+print("Pending user list after fetching using a query : {}".format(session.new))
+print("-" * 80)
+
+print("Comparing wendy_user and our_user for Identity Mapping within a Unit of \
+Work")
+print("wendy_user = our_user : {}".format(wendy_user == our_user))
+print("id(wendy_user) id(our_user): {} {}".format(id(wendy_user), id(our_user)))
+
+session.commit()
+
+input("\nEnter to continue...")
+
+################################################################################
+
 os.system('clear')
 print("\n"* 5)
 cprint("END".rjust(38, " "), 'blue', attrs=['bold'])
