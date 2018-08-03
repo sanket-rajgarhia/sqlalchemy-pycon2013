@@ -1,6 +1,8 @@
 import os
 from termcolor import colored, cprint
 
+from sqlalchemy.ext.declarative import declarative_base
+
 #Restore the state of metadata.db - prior to run
 os.system('git checkout -- orm.db')
 
@@ -18,12 +20,15 @@ def print_output(number,code,heading):
 ################################################################################
 
 #1
-#Heading for section.
+#Creating the 'Declarative Base'.
 number = 1
 code = """
 """
-heading = ""
+heading = "#Creating the 'Declarative Base'."
 print_output(number,code,heading)
+
+Base = declarative_base()
+print(Base.metadata)
 
 input("\nEnter to continue...")
 
