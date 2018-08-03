@@ -750,6 +750,24 @@ input("\nEnter to continue...")
 
 ################################################################################
 
+#18
+#Delete using SQL Expression delete().
+number += 1
+code = """
+"""
+heading = "Delete using SQL Expression delete()."
+print_output(number,code,heading)
+
+delete_stm = address_table.delete().where(
+    address_table.c.email_address == 'ed@ed.com')
+print(delete_stm)
+result = engine.execute(delete_stm)
+print("result.rowcount : {}".format(result.rowcount))
+
+input("\nEnter to continue...")
+
+################################################################################
+
 #N
 #Section heading.
 number += 1
@@ -761,6 +779,7 @@ print_output(number,code,heading)
 input("\nEnter to continue...")
 
 ################################################################################
+
 os.system('clear')
 print("\n"* 5)
 cprint("END".rjust(38, " "), 'blue', attrs=['bold'])
