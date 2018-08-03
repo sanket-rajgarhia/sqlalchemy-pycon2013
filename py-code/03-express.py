@@ -768,13 +768,36 @@ input("\nEnter to continue...")
 
 ################################################################################
 
-#N
-#Section heading.
+#19
+#Exercise - 4.
 number += 1
 code = """
 """
 heading = ""
 print_output(number,code,heading)
+
+result = engine.execute(user_table.select())
+print(result.fetchall())
+print("-" * 80)
+update_stm = user_table.update().values(fullname = 'Ed Jones').where(
+user_table.c.username == 'ed')
+print(update_stm)
+print("-" * 80)
+result = engine.execute(update_stm)
+print("result.rowcount : {}".format(result.rowcount))
+print("-" * 80)
+
+subq = select([address_table.c.email_address.label('email')]).where(
+address_table.c.user_id == user_table.c.id)
+print(subq)
+result = engine.execute(subq)
+print(result.fetchall())
+print("-" * 80)
+update_stm = user_table.update().values(fullname = user_table.c.fullname + ' - '
++ subq.as_scalar()).where(user_table.c.username.in_(['jack','wendy']))
+print(update_stm)
+result = engine.execute(update_stm)
+print("result.rowcount : {}".format(result.rowcount))
 
 input("\nEnter to continue...")
 
