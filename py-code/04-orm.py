@@ -228,6 +228,15 @@ print("Fetching all records in User table after rollback")
 user_table = session.query(User).all()
 for row in user_table:
     print(row)
+print("-" * 80)
+print("Upon rollback the fake_user object is evicted from session.")
+print("fake_user in session : {} ".format(fake_user in session))
+print("Upon rollback the ed_user object is still in session.")
+print("user_ed in session : {} ".format(user_ed in session))
+print("session.new : {}  session.dirty : {}".format(session.new, session.dirty))
+print('fake_user is still in memory : {}'.format(id(fake_user)))
+print('fake_user is still in memory : {} {}'.format(fake_user.name,
+fake_user.fullname))
 session.close()
 """
 heading = "Modifying a domain model object makes it dirty. session.rollback()."
@@ -263,6 +272,15 @@ print("Fetching all records in User table after rollback")
 user_table = session.query(User).all()
 for row in user_table:
     print(row)
+print("-" * 80)
+print("Upon rollback the fake_user object is evicted from session.")
+print("fake_user in session : {} ".format(fake_user in session))
+print("Upon rollback the ed_user object is still in session.")
+print("user_ed in session : {} ".format(user_ed in session))
+print("session.new : {}  session.dirty : {}".format(session.new, session.dirty))
+print('fake_user is still in memory : {}'.format(id(fake_user)))
+print('fake_user is still in memory : {} {}'.format(fake_user.name,
+fake_user.fullname))
 session.close()
 
 input("\nEnter to continue...")
