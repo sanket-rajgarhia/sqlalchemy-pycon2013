@@ -224,6 +224,8 @@ print("-" * 80)
 print("Rolling back - session.rollback()")
 session.rollback()
 print("-" * 80)
+print("Upon rollback the objects are expired.")
+print(mary_user.__dict__)
 print("Fetching all records in User table after rollback")
 user_table = session.query(User).all()
 for row in user_table:
@@ -237,6 +239,7 @@ print("session.new : {}  session.dirty : {}".format(session.new, session.dirty))
 print('fake_user is still in memory : {}'.format(id(fake_user)))
 print('fake_user is still in memory : {} {}'.format(fake_user.name,
 fake_user.fullname))
+
 session.close()
 """
 heading = "Modifying a domain model object makes it dirty. session.rollback()."
@@ -268,6 +271,8 @@ print("-" * 80)
 print("Rolling back - session.rollback()")
 session.rollback()
 print("-" * 80)
+print("Upon rollback the objects are expired.")
+print(mary_user.__dict__)
 print("Fetching all records in User table after rollback")
 user_table = session.query(User).all()
 for row in user_table:
@@ -281,6 +286,7 @@ print("session.new : {}  session.dirty : {}".format(session.new, session.dirty))
 print('fake_user is still in memory : {}'.format(id(fake_user)))
 print('fake_user is still in memory : {} {}'.format(fake_user.name,
 fake_user.fullname))
+
 session.close()
 
 input("\nEnter to continue...")
