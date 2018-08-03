@@ -226,6 +226,11 @@ session.rollback()
 print("-" * 80)
 print("Upon rollback the objects are expired.")
 print(mary_user.__dict__)
+print("Demonstrates lazy loading - since an attribute of an expired object was \
+accessed.")
+print(mary_user.fullname)
+print(mary_user.__dict__)
+print("-" * 80)
 print("Fetching all records in User table after rollback")
 user_table = session.query(User).all()
 for row in user_table:
@@ -273,6 +278,11 @@ session.rollback()
 print("-" * 80)
 print("Upon rollback the objects are expired.")
 print(mary_user.__dict__)
+print("Demonstrates lazy loading - since an attribute of an expired object was \
+accessed.")
+print(mary_user.fullname)
+print(mary_user.__dict__)
+print("-" * 80)
 print("Fetching all records in User table after rollback")
 user_table = session.query(User).all()
 for row in user_table:
