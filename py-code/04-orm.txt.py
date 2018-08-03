@@ -80,7 +80,7 @@ input("\nEnter to continue...")
 ################################################################################
 
 #3
-#Creating the engine and creating all tables in Base.metadataself.
+#Creating the engine and creating all tables in Base.metadata.
 #Persisting the data in the data object.
 number += 1
 code = """
