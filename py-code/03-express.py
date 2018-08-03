@@ -679,6 +679,37 @@ input("\nEnter to continue...")
 
 ################################################################################
 
+#16
+#Exercise - 3.
+number += 1
+code = """
+select_stmt = select([user_table.c.fullname,
+                      address_table.c.email_address]).select_from(
+                      user_table.join(address_table)).where(
+                      user_table.c.username == 'ed').order_by(
+                      address_table.c.email_address)
+print(select_stmt)
+print("-" * 80)
+result = engine.execute(select_stmt)
+print(result.fetchall())
+"""
+heading = "Exercise - 3."
+print_output(number,code,heading)
+
+select_stmt = select([user_table.c.fullname,
+                      address_table.c.email_address]).select_from(
+                      user_table.join(address_table)).where(
+                      user_table.c.username == 'ed').order_by(
+                      address_table.c.email_address)
+print(select_stmt)
+print("-" * 80)
+result = engine.execute(select_stmt)
+print(result.fetchall())
+
+input("\nEnter to continue...")
+
+################################################################################
+
 #N
 #Section heading.
 number += 1
