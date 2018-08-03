@@ -147,6 +147,11 @@ print("wendy_user = our_user : {}".format(wendy_user == our_user))
 print("id(wendy_user) id(our_user): {} {}".format(id(wendy_user), id(our_user)))
 
 session.commit()
+
+print("After session.commit() - transaction endsand all variables are expired.")
+print("Accessing domain objects after expiration results in lazy loading.")
+print(wendy_user.fullname)
+print(wendy_user.__dict__)
 """
 heading = "Inserting multiple rows into the table. "
 print_output(number,code,heading)
@@ -181,6 +186,11 @@ print("wendy_user = our_user : {}".format(wendy_user == our_user))
 print("id(wendy_user) id(our_user): {} {}".format(id(wendy_user), id(our_user)))
 
 session.commit()
+
+print("After session.commit() - transaction endsand all variables are expired.")
+print("Accessing domain objects after expiration results in lazy loading.")
+print(wendy_user.fullname)
+print(wendy_user.__dict__)
 
 input("\nEnter to continue...")
 
