@@ -4,6 +4,8 @@ from termcolor import colored, cprint
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column
 from sqlalchemy import Integer, String
+from sqlalchemy import create_engine
+from sqlalchemy.orm import Session
 
 #Restore the state of metadata.db - prior to run
 os.system('git checkout -- orm.db')
@@ -72,6 +74,49 @@ class User(Base):
 
 print(User.__tablename__)
 print(User.__mapper__)
+
+input("\nEnter to continue...")
+
+################################################################################
+
+#3
+#Creating the engine and creating all tables in Base.metadataself.
+#Persisting the data in the data object.
+number += 1
+code = """
+#Creating all tables in Base.metadata
+engine = create_engine("sqlite:///orm.db")
+Base.metadata.create_all(engine)
+
+print("Persisting the data in the data object.")
+print("-" * 80)
+ed_user = User(name = 'ed', fullname = 'Edward Jones')
+print(ed_user)
+print("-" * 80)
+session = Session(engine)
+session.add(ed_user)
+result = session.query(User).filter_by(name = 'ed').first()
+print(result.id, result.name, result.fullname)
+session.commit()
+"""
+heading = "Creating the engine and creating all tables in Base.metadata"
+heading += "\nPersisting the data in the data object."
+print_output(number,code,heading)
+
+#Creating all tables in Base.metadata
+engine = create_engine("sqlite:///orm.db")
+Base.metadata.create_all(engine)
+
+print("Persisting the data in the data object.")
+print("-" * 80)
+ed_user = User(name = 'ed', fullname = 'Edward Jones')
+print(ed_user)
+print("-" * 80)
+session = Session(engine)
+session.add(ed_user)
+result = session.query(User).filter_by(name = 'ed').first()
+print(result.id, result.name, result.fullname)
+session.commit()
 
 input("\nEnter to continue...")
 
