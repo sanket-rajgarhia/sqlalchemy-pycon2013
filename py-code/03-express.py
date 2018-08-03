@@ -754,6 +754,11 @@ input("\nEnter to continue...")
 #Delete using SQL Expression delete().
 number += 1
 code = """
+delete_stm = address_table.delete().where(
+    address_table.c.email_address == 'ed@ed.com')
+print(delete_stm)
+result = engine.execute(delete_stm)
+print("result.rowcount : {}".format(result.rowcount))
 """
 heading = "Delete using SQL Expression delete()."
 print_output(number,code,heading)
@@ -772,8 +777,30 @@ input("\nEnter to continue...")
 #Exercise - 4.
 number += 1
 code = """
+result = engine.execute(user_table.select())
+print(result.fetchall())
+print("-" * 80)
+update_stm = user_table.update().values(fullname = 'Ed Jones').where(
+user_table.c.username == 'ed')
+print(update_stm)
+print("-" * 80)
+result = engine.execute(update_stm)
+print("result.rowcount : {}".format(result.rowcount))
+print("-" * 80)
+
+subq = select([address_table.c.email_address.label('email')]).where(
+address_table.c.user_id == user_table.c.id)
+print(subq)
+result = engine.execute(subq)
+print(result.fetchall())
+print("-" * 80)
+update_stm = user_table.update().values(fullname = user_table.c.fullname + ' - '
++ subq.as_scalar()).where(user_table.c.username.in_(['jack','wendy']))
+print(update_stm)
+result = engine.execute(update_stm)
+print("result.rowcount : {}".format(result.rowcount))
 """
-heading = ""
+heading = "Exercise - 4."
 print_output(number,code,heading)
 
 result = engine.execute(user_table.select())
