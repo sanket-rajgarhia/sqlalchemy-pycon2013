@@ -8,8 +8,8 @@ from sqlalchemy import Integer, String
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-#Restore the state of metadata.db - prior to run
-os.system('git checkout -- orm.db')
+#Restore the state of orm-query.db - prior to run
+os.system('git checkout -- orm-query.db')
 
 #Function to print heading and code
 def print_output(number,code,heading):
@@ -56,7 +56,7 @@ session.commit()
 os.system('clear')
 print("\n"* 5)
 cprint("END".rjust(38, " "), 'blue', attrs=['bold'])
-heading = "NOTE: RESET YOUR GIT : git checkout -- orm.db"
+heading = "NOTE: RESET YOUR GIT : git checkout -- orm-query.db"
 heading = heading.rjust(( len(heading) + ((80 - len(heading)) // 2)), " ")
 cprint('{}'.format(heading), 'red', attrs=['blink','bold'])
 print("\n"* 5)

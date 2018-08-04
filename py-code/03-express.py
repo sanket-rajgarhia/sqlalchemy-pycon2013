@@ -10,7 +10,7 @@ from sqlalchemy.dialects import mysql, postgresql, sqlite
 from sqlalchemy import select, func
 from sqlalchemy.sql.expression import cast
 
-#Restore the state of metadata.db - prior to run
+#Restore the state of express.db - prior to run
 os.system('git checkout -- express.db')
 
 #Function to print heading and code

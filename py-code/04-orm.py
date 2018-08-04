@@ -7,7 +7,7 @@ from sqlalchemy import Integer, String
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 
-#Restore the state of metadata.db - prior to run
+#Restore the state of orm.db - prior to run
 os.system('git checkout -- orm.db')
 
 #Function to print heading and code
