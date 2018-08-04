@@ -200,6 +200,36 @@ input("\nEnter to continue...")
 ################################################################################
 
 #4
+#Exercies - 1
+
+number += 1
+coded = """
+"""
+heading = "Exercise - 1"
+print_output(number,code,heading)
+
+print("Getting fullname from User for all users - in alphabetical order.")
+print("-" * 80)
+query1 = session.query(User.fullname).order_by(User.fullname)
+print(query1)
+result1 = query1.all()
+for full_name in result1:
+    print(full_name[0])
+print("-" * 80)
+
+print("Modifying query1 to get only records for 'mary' and 'ed' and displaying")
+print("the second record only.")
+print("-" * 80)
+query2 = query1.filter(or_(User.name == "mary",User.name == "ed"))
+print(query2)
+result2 = query2[1]
+print(result2)
+
+input("\nEnter to continue...")
+
+################################################################################
+
+#5
 #Establishing relationship between Domain Models.
 number += 1
 code = """
@@ -238,7 +268,7 @@ input("\nEnter to continue...")
 
 ################################################################################
 
-#5
+#6
 #Add data and accessing data from the Domain Model using relationship.
 number += 1
 code = """
