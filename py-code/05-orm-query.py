@@ -3,10 +3,10 @@ from termcolor import colored, cprint
 
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
-from sqlalchemy import Column
+from sqlalchemy import Column, ForeignKey
 from sqlalchemy import Integer, String
 from sqlalchemy import select, or_
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, relationship
 
 #Restore the state of orm-query.db - prior to run
 os.system('git checkout -- orm-query.db')
@@ -195,6 +195,45 @@ print(query)
 result_one = query.one()
 print("One row : {} {} {}".format(result_one.id,
                                   result_one.name, result_one.fullname))
+input("\nEnter to continue...")
+
+################################################################################
+
+#4
+#Establishing relationship between Domain Models.
+number += 1
+code = """
+class Address(Base):
+    __tablename__ = 'address'
+
+    id = Column(Integer, primary_key = True)
+    email_address = Column(String(100), nullable = False)
+    user_id = Column(Integer, ForeignKey(User.id))
+
+    user = relationship("User", backref="addresses")
+
+    def __repr__(self):
+        return "<Address (%r) >" % self.email_address
+
+Base.metadata.create_all(engine)
+"""
+heading = "Establishing relationship between Domain Models."
+print_output(number,code,heading)
+
+class Address(Base):
+    __tablename__ = 'address'
+
+    id = Column(Integer, primary_key = True)
+    email_address = Column(String(100), nullable = False)
+    user_id = Column(Integer, ForeignKey(User.id))
+
+    user = relationship("User", backref="addresses")
+
+    def __repr__(self):
+        return "<Address (%r) >" % self.email_address
+
+Base.metadata.create_all(engine)
+
 input("\nEnter to continue...")
 
 ################################################################################
