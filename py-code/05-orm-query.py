@@ -350,6 +350,119 @@ input("\nEnter to continue...")
 
 ################################################################################
 
+#7
+#Joins in ORM
+number += 1
+code = """
+print("Implicit Join")
+print("-" * 80)
+query = session.query(User,Address).filter(User.id == Address.user_id)
+print(query)
+result = query.all()
+for row in result:
+    print(row)
+print("-" * 80)
+print("Inner Join using - join()")
+print("-" * 80)
+query = session.query(User,Address).join(Address,User.id == Address.user_id)
+print(query)
+result = query.all()
+for row in result:
+    print(row)
+print("-" * 80)
+print("join() method can automatically determine the ON clause for simple \
+\njoins based on primary and foreign keys of the two tables being joined.")
+print("-" * 80)
+query = session.query(User,Address).join(Address)
+print(query)
+result = query.all()
+for row in result:
+    print(row)
+print("-" * 80)
+
+print("join() method can use relationship attribute of the 1st identity to \
+\ndetermine the table that will appear after JOIN keyword and the on clause.")
+print("-" * 80)
+query = session.query(User,Address).join(User.addresses)
+print(query)
+result = query.all()
+for row in result:
+    print(row)
+print("-" * 80)
+
+print("Reverse the order of join using \n\
+the session.query(T1,T2).select_from(T2).join(relationAttribiteInT2)")
+print("-" * 80)
+query = session.query(User,Address).select_from(Address).join(Address.user)
+print(query)
+result = query.all()
+for row in result:
+    print(row)
+"""
+heading = "Joins in ORM."
+print_output(number,code,heading)
+
+print("Implicit Join")
+print("-" * 80)
+query = session.query(User,Address).filter(User.id == Address.user_id)
+print(query)
+result = query.all()
+for row in result:
+    print(row)
+print("-" * 80)
+print("Inner Join using - join()")
+print("-" * 80)
+query = session.query(User,Address).join(Address,User.id == Address.user_id)
+print(query)
+result = query.all()
+for row in result:
+    print(row)
+print("-" * 80)
+print("join() method can automatically determine the ON clause for simple \
+\njoins based on primary and foreign keys of the two tables being joined.")
+print("-" * 80)
+query = session.query(User,Address).join(Address)
+print(query)
+result = query.all()
+for row in result:
+    print(row)
+print("-" * 80)
+
+print("join() method can use relationship attribute of the 1st identity to \
+\ndetermine the table that will appear after JOIN keyword and the on clause.")
+print("-" * 80)
+query = session.query(User,Address).join(User.addresses)
+print(query)
+result = query.all()
+for row in result:
+    print(row)
+print("-" * 80)
+
+print("Reverse the order of join using \n\
+the session.query(T1,T2).select_from(T2).join(relationAttribiteInT2)")
+print("-" * 80)
+query = session.query(User,Address).select_from(Address).join(Address.user)
+print(query)
+result = query.all()
+for row in result:
+    print(row)
+
+input("\nEnter to continue...")
+
+################################################################################
+
+#
+#Heading section.
+number += 1
+code = """
+"""
+heading = ""
+print_output(number,code,heading)
+
+#input("\nEnter to continue...")
+
+################################################################################
+
 os.system('clear')
 print("\n"* 5)
 cprint("END".rjust(38, " "), 'blue', attrs=['bold'])
