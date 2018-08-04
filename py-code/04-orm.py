@@ -303,6 +303,58 @@ input("\nEnter to continue...")
 
 ################################################################################
 
+#6
+#Exercise - 1.
+number += 1
+code = """
+class Network(Base):
+    __tablename__ = 'network'
+
+    network_id = Column(Integer, primary_key = True)
+    name = Column(String(100), nullable = False)
+
+    def __repr__(self):
+        return "<Network %r %r>" % (self.network_id, self.name)
+
+Base.metadata.create_all(engine)
+
+print("Adding values to the network table.")
+session = Session(engine)
+session.add_all([
+                Network(name = 'net1'),
+                Network(name = 'net2')
+                ])
+session.commit()
+session.close()
+"""
+heading = "Exercise - 1"
+print_output(number,code,heading)
+
+print("Domain Model - Network creation.")
+class Network(Base):
+    __tablename__ = 'network'
+
+    network_id = Column(Integer, primary_key = True)
+    name = Column(String(100), nullable = False)
+
+    def __repr__(self):
+        return "<Network %r %r>" % (self.network_id, self.name)
+
+Base.metadata.create_all(engine)
+
+print("Adding values to the network table.")
+session = Session(engine)
+session.add_all([
+                Network(name = 'net1'),
+                Network(name = 'net2')
+                ])
+session.commit()
+session.close()
+
+input("\nEnter to continue...")
+
+################################################################################
+
 os.system('clear')
 print("\n"* 5)
 cprint("END".rjust(38, " "), 'blue', attrs=['bold'])
