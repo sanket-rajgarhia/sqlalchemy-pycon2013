@@ -204,6 +204,22 @@ input("\nEnter to continue...")
 
 number += 1
 coded = """
+print("Getting fullname from User for all users - in alphabetical order.")
+print("-" * 80)
+query1 = session.query(User.fullname).order_by(User.fullname)
+print(query1)
+result1 = query1.all()
+for full_name in result1:
+    print(full_name[0])
+print("-" * 80)
+
+print("Modifying query1 to get only records for 'mary' and 'ed' and displaying")
+print("the second record only.")
+print("-" * 80)
+query2 = query1.filter(or_(User.name == "mary",User.name == "ed"))
+print(query2)
+result2 = query2[1]
+print(result2)
 """
 heading = "Exercise - 1"
 print_output(number,code,heading)
