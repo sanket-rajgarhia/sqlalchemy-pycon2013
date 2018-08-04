@@ -5,6 +5,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy import Column
 from sqlalchemy import Integer, String
+from sqlalchemy import select
+from sqlalchemy.orm import Session
 
 #Restore the state of metadata.db - prior to run
 os.system('git checkout -- orm.db')
@@ -37,7 +39,17 @@ class User(Base):
     def __repr__(self):
         return "<User (%r %r)>" % (self.name, self.fullname)
 
-engine = create_engine("sqlite:///orm.db")
+engine = create_engine("sqlite:///orm-query.db")
+Base.metadata.create_all(engine)
+
+session = Session(engine)
+session.add_all([
+                  User(name = 'ed', fullname = 'Edward Jones'),
+                  User(name = 'wendy', fullname = 'Wendy Weathersmith'),
+                  User(name = 'mary', fullname = 'Mary Contrary'),
+                  User(name = 'fred', fullname = 'Fred Flintstone')
+                ])
+session.commit()
 
 ################################################################################
 
