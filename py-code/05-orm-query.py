@@ -238,6 +238,72 @@ input("\nEnter to continue...")
 
 ################################################################################
 
+#5
+#Add data and accessing data from the Domain Model using relationship.
+number += 1
+code = """
+"""
+heading="Add data and accessing data from the Domain Model using relationship."
+print_output(number,code,heading)
+
+print("Creating a new user - now also adds an 'addresses' attribute to it.")
+print("-" * 80)
+usr_jack = User(name = "jack", fullname = "Jack Bean")
+print("id : {} \nname : {} \nfullname : {} \naddresses : {}".format(usr_jack.id,
+usr_jack.name, usr_jack.fullname, usr_jack.addresses))
+print("-" * 80)
+
+print("Adding Address objects to 'addresses' collection of usr_jack object")
+print("-" * 80)
+usr_jack.addresses = [Address(email_address = 'jack@gmail.com'),
+                       Address(email_address = 'j25@yahoo.com'),
+                       Address(email_address= 'jack@hotmail.com')]
+
+print("Accessing the user attribute of the Address object - yeilds User - jack")
+print("-" * 80)
+print(usr_jack.addresses[0].user)
+print("-" * 80)
+
+print("Cascading : Adding usr_jack object to a session automatically")
+print("adds the Address objects created, to the session")
+print("and can be verified using session.new.")
+print("-" * 80)
+session.add(usr_jack)
+print(session.new)
+print("-" * 80)
+
+print("Unit of Work determines automatically the correct order in which the")
+print("objects will be inserted.")
+print("Committing the session - expires the objects.")
+print("-" * 80)
+print(usr_jack.__dict__)
+session.commit()
+print(usr_jack.__dict__)
+print("-" * 80)
+
+print("Accessing usr_jack.addresses will now perform a 'Lazy Load'.")
+print("Retrieves id for usr_jack : {}".format(usr_jack.id))
+print(usr_jack.__dict__)
+print("-" * 80)
+print("Lazy Loading addresses collection for usr_jack")
+print(usr_jack.addresses)
+print(usr_jack.__dict__)
+print("-" * 80)
+
+print("Changing the email_address of one user to belong to another user.")
+print("-" * 80)
+usr_fred = session.query(User).filter_by(name = "fred").one()
+usr_jack.addresses[1].user = usr_fred
+print("Email addresses for jack : {} ".format(usr_jack.addresses))
+print("Email addresses for fred : {} ".format(usr_fred.addresses))
+print(session.new)
+print(session.dirty)
+session.commit()
+
+input("\nEnter to continue...")
+
+################################################################################
+
 os.system('clear')
 print("\n"* 5)
 cprint("END".rjust(38, " "), 'blue', attrs=['bold'])
