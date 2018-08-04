@@ -53,7 +53,7 @@ session.commit()
 
 ################################################################################
 
-#1
+#2
 #Using the Domain Model object oriented classes.
 number = 1
 code = """
@@ -118,7 +118,7 @@ input("\nEnter to continue...")
 
 ################################################################################
 
-#2
+#3
 #ORM and session.query() method.
 number += 1
 code = """
