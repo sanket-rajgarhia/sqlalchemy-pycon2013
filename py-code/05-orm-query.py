@@ -7,6 +7,7 @@ from sqlalchemy import Column, ForeignKey
 from sqlalchemy import Integer, String
 from sqlalchemy import select, or_, func
 from sqlalchemy.orm import Session, relationship, aliased
+from sqlalchemy.orm import subqueryload, joinedload, contains_eager
 
 #Restore the state of orm-query.db - prior to run
 os.system('git checkout -- orm-query.db')
@@ -26,6 +27,7 @@ def print_output(number,code,heading):
 
 #1
 #Initialization.
+number = 1
 Base = declarative_base()
 
 class User(Base):
@@ -55,7 +57,7 @@ session.commit()
 
 #2
 #Using the Domain Model object oriented classes.
-number = 1
+number += 1
 code = """
 print("Attributes of Domain Model classes act just as Column() objects.")
 print(User.name == 'ed')
@@ -570,6 +572,77 @@ print(query)
 result_query = query.all()
 for row in result_query:
      print(row)
+
+input("\nEnter to continue...")
+
+################################################################################
+
+#10
+#Eager Loading.
+number += 1
+code = """
+"""
+heading = "Eager Loading."
+print_output(number,code,heading)
+
+print("Eager loading to load the Parent table row and the child collection \
+\n attribute- using options(subqueryload(T1.collectionAttribute)).")
+print("-" * 80)
+session.commit()
+query = session.query(User).options(subqueryload(User.addresses))
+print(query)
+result = query.all()
+for user in result:
+    print(user.name, user.addresses)
+print("-" * 80)
+
+print("Eager loading to load the Parent table row and the child collection \
+\n attribute- using options(joinedload(T1.collectionAttribute)).")
+print("-" * 80)
+session.rollback()
+query = session.query(User).options(joinedload(User.addresses))
+print(query)
+result = query.all()
+for user in result:
+    print(user.name, user.addresses)
+print("-" * 80)
+
+print("Filter does not work with joinedload() since joinedload always uses \
+\n an alias and the filter fails.")
+print("-" * 80)
+session.rollback()
+query = session.query(Address).options(joinedload(Address.user)).\
+                              filter(User.name == 'jack')
+print(query)
+result = query.all()
+for address in result:
+    print(address.email_address, address.user)
+print("-" * 80)
+
+print("To make filter work with joinedload() you need to join() and filter \
+\n first and then only use joinedload().")
+print("-" * 80)
+session.rollback()
+query = session.query(Address).join(Address.user).\
+                               filter(User.name == 'jack').\
+                               options(joinedload(Address.user))
+print(query)
+result = query.all()
+for address in result:
+    print(address.email_address, address.user)
+print("-" * 80)
+
+print("To prevent joins twice - use the options(contains_eager()).")
+print("-" * 80)
+session.rollback()
+query = session.query(Address).join(Address.user).\
+                               filter(User.name == 'jack').\
+                               options(contains_eager(Address.user))
+print(query)
+result = query.all()
+for address in result:
+    print(address.email_address, address.user)
+print("-" * 80)
 
 input("\nEnter to continue...")
 
