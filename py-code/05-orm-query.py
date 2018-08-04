@@ -5,7 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy import Column
 from sqlalchemy import Integer, String
-from sqlalchemy import select
+from sqlalchemy import select, or_
 from sqlalchemy.orm import Session
 
 #Restore the state of orm-query.db - prior to run
@@ -114,6 +114,87 @@ print("Unpacking tuples returned from sesson.query() method.")
 for name, fullname in session.query(User.name, User.fullname):
     print(name, fullname)
 
+input("\nEnter to continue...")
+
+################################################################################
+
+#2
+#ORM and session.query() method.
+number += 1
+code = """
+"""
+heading = "ORM and session.query() method."
+print_output(number,code,heading)
+
+print("Mix entities and columns in the session.query() method.")
+print("-" * 80)
+result = session.query(User, User.name).all()
+print(result)
+print("-" * 80)
+
+print("Indexing - Always remeber to use order_by().")
+print("-" * 80)
+result = session.query(User).order_by(User.id)[2]
+print(result)
+print("-" * 80)
+
+print("Slicing - Always remember to use order_by().")
+print("-" * 80)
+result = session.query(User).order_by(User.id.desc())[1:3]
+print(result)
+print("-" * 80)
+
+print("filter_by(attribute = 'value') for WHERE clause")
+print("-" * 80)
+result = session.query(User).filter_by(name = 'ed').first()
+print(result)
+print("-" * 80)
+
+print("filter(DomainModel.attribute == 'value') for WHERE clause - can use SQL \
+Expression.")
+print("-" * 80)
+result = session.query(User).filter(User.name == 'ed').first()
+print(result)
+print("-" * 80)
+
+print("OR Conjunction")
+print("-" * 80)
+result = session.query(User).filter(or_(User.name == 'ed', User.id > 3)).all()
+print(result)
+for user in result:
+    print(user.id, user.name, user.fullname)
+print("-" * 80)
+
+print("Using filter() in sequence automatically uses the AND conjunction.")
+print("-" * 80)
+query = session.query(User).filter(
+                            User.name == 'ed').filter(User.id == 1)
+print(query)
+result = query.all()
+for user in result:
+    print(user.id, user.name, user.fullname)
+print("-" * 80)
+
+print("Formation of query doesn't execute the query.")
+print("-" * 80)
+query = session.query(User).filter(User.name.in_(["ed","wendy","mary"]))
+print(query)
+print("-" * 80)
+
+print("Execution of a query to fetch - first(), all() or one()")
+print("-" * 80)
+result_first = query.first()
+print("first() : {}".format(result_first))
+result_all = query.all()
+print(result_all)
+print("-" * 80)
+print("Execution of a query to fetch one() must yield only 1 row")
+print("-" * 80)
+query = session.query(User).filter(User.name == 'ed')
+print(query)
+result_one = query.one()
+print("One row : {} {} {}".format(result_one.id,
+                                  result_one.name, result_one.fullname))
 input("\nEnter to continue...")
 
 ################################################################################
