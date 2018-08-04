@@ -113,6 +113,7 @@ result = query.all()
 print(result)
 print("-" * 80)
 print("Unpacking tuples returned from sesson.query() method.")
+print("-" * 80)
 for name, fullname in session.query(User.name, User.fullname):
     print(name, fullname)
 
@@ -648,15 +649,44 @@ input("\nEnter to continue...")
 
 ################################################################################
 
-#
-#Heading section.
+#11
+#Delete Cascade.
 number += 1
 code = """
 """
-heading = ""
+heading = "Delete Cascade."
 print_output(number,code,heading)
 
-#input("\nEnter to continue...")
+print("Deleteing one of the objects of the foreign key attribute collection\
+\nupdates the underyling foreign key column value to NULL.")
+print("-" * 80)
+jack = session.query(User).filter(User.name == 'jack').one()
+del jack.addresses[0]
+session.commit()
+print(User.addresses.property.cascade)
+for address in session.query(Address):
+    print(address.id, address.email_address, address.user_id, address.user)
+print("-" * 80)
+
+print("Update the User.addresses.property.cascade to include delete-orphan")
+print("-" * 80)
+User.addresses.property.cascade = "all, delete, delete-orphan"
+fred = session.query(User).filter(User.name == 'fred').one()
+del fred.addresses[0]
+session.commit()
+print(User.addresses.property.cascade)
+for address in session.query(Address):
+    print(address.id, address.email_address, address.user_id, address.user)
+print("-" * 80)
+
+print("Deleteing a primary key entry - all foreign key refrences are deleted.")
+print("-" * 80)
+session.delete(jack)
+session.commit()
+for address in session.query(Address):
+    print(address.id, address.email_address, address.user_id, address.user)
+
+input("\nEnter to continue...")
 
 ################################################################################
 
