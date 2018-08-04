@@ -79,6 +79,10 @@ query = session.query(User.id.label("ID"), User.name, User.fullname).filter(
                        User.name.in_(['ed','wendy'])).order_by(User.name.desc())
 result = query.all()
 print(result)
+print("-" * 80)
+print("Unpacking tuples returned from sesson.query() method.")
+for name, fullname in session.query(User.name, User.fullname):
+    print(name, fullname)
 """
 heading = "Using the Domain Model object oriented classes."
 print_output(number,code,heading)
@@ -105,6 +109,10 @@ query = session.query(User.id.label("ID"), User.name, User.fullname).filter(
                        User.name.in_(['ed','wendy'])).order_by(User.name.desc())
 result = query.all()
 print(result)
+print("-" * 80)
+print("Unpacking tuples returned from sesson.query() method.")
+for name, fullname in session.query(User.name, User.fullname):
+    print(name, fullname)
 
 input("\nEnter to continue...")
 
