@@ -5,7 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy import Integer, String
-from sqlalchemy import select, or_
+from sqlalchemy import select, or_, func
 from sqlalchemy.orm import Session, relationship, aliased
 
 #Restore the state of orm-query.db - prior to run
@@ -507,6 +507,69 @@ for row in result3:
     print(row[0].id, row[0].name, row[0].fullname, row[1].email_address,
     row[2].email_address)
 print("-" * 80)
+
+input("\nEnter to continue...")
+
+################################################################################
+
+#9
+#Subquery and ORM.
+number += 1
+code = """
+"""
+heading = ""
+print_output(number,code,heading)
+
+print("Inner Join Address and user ")
+print("-" * 80)
+query1 = session.query(Address.id,Address.email_address,
+                       User.id,User.fullname).join(User)
+print(query1)
+result1 = query1.all()
+for row in result1:
+    print(row)
+print("-" * 80)
+
+print("Inner Join Address and User - group on User.id and count Address.id")
+print("-" * 80)
+query2 = session.query(func.count(Address.id).label('count'),
+                       User.id,User.fullname).join(User).group_by(User.id)
+print(query2)
+result2 = query2.all()
+for row in result2:
+    print(row)
+print("-" * 80)
+
+print("Execute subquery using - session.connection().execute(subq)")
+print("-" * 80)
+subq = query2.subquery()
+print(subq)
+result = session.connection().execute(subq)
+for row in result:
+    print(row)
+print("-" * 80)
+
+print("Subquery as an alias() object")
+print("-" * 80)
+print(subq.element)
+print("subq.element.froms : {}".format(subq.element.froms))
+print("subq.element.froms[0] : {}".format(subq.element.froms[0]))
+print("subq.element.froms[0].left : {}".format(subq.element.froms[0].left))
+print("subq.element.froms[0].right : {}".format(subq.element.froms[0].right))
+print("subq.element.froms[0].right.c.keys() : {}".format(
+                                        subq.element.froms[0].right.c.keys()))
+print("-" * 80)
+
+print("Print all Users along with count of their email_address in Address.")
+print("Creating a subquery() is like creating a Table() object")
+print("and .c.column_name is made available.")
+print("-" * 80)
+query = session.query(User.fullname,func.coalesce(subq.c.count,0)).outerjoin(
+                                    subq, User.id == subq.c.id)
+print(query)
+result_query = query.all()
+for row in result_query:
+     print(row)
 
 input("\nEnter to continue...")
 
