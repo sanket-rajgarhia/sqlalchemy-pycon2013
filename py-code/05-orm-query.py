@@ -6,7 +6,7 @@ from sqlalchemy import create_engine
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy import Integer, String
 from sqlalchemy import select, or_
-from sqlalchemy.orm import Session, relationship
+from sqlalchemy.orm import Session, relationship, aliased
 
 #Restore the state of orm-query.db - prior to run
 os.system('git checkout -- orm-query.db')
@@ -446,6 +446,67 @@ print(query)
 result = query.all()
 for row in result:
     print(row)
+
+input("\nEnter to continue...")
+
+################################################################################
+
+#8
+#Alias in ORM.
+number += 1
+code = """
+"""
+heading = "Alias in ORM."
+print_output(number,code,heading)
+
+#Create AliasedClass objects
+a1 = aliased(Address)
+a2 = aliased(Address)
+
+print("Result for : session.query(User,a1).join(a1)")
+print("-" * 80)
+query1 = session.query(User,a1).join(a1)
+print(query1)
+result1 = query1.all()
+for row in result1:
+    print(row[0].id, row[0].name, row[0].fullname, row[1].email_address)
+print("-" * 80)
+
+print("Result for : session.query(User,a1,a2).join(a1).join(a2)")
+print("-" * 80)
+query2 = session.query(User,a1,a2).join(a1).join(a2)
+print(query2)
+result2 = query2.all()
+for row in result2:
+    print(row[0].id, row[0].name, row[0].fullname, row[1].email_address,
+    row[2].email_address)
+print("-" * 80)
+
+print("Result for : session.query(User,a1,a2).join(a1).join(a2).\
+filter(a1.email_address == 'jack@gmail.com')")
+print("-" * 80)
+query2 = session.query(User,a1,a2).join(a1).join(a2).filter(
+                                   a1.email_address == 'jack@gmail.com')
+print(query2)
+result2 = query2.all()
+for row in result2:
+    print(row[0].id, row[0].name, row[0].fullname, row[1].email_address,
+    row[2].email_address)
+print("-" * 80)
+
+print("Result for : session.query(User,a1,a2).join(a1).join(a2).\
+\nfilter(a1.email_address == 'jack@gmail.com').\
+\nfilter(a2.email_address == 'jack@hotmail.com')")
+print("-" * 80)
+query3 = session.query(User,a1,a2).join(a1).join(a2).filter(
+               a1.email_address == 'jack@gmail.com').filter(
+               a2.email_address == 'jack@hotmail.com')
+print(query3)
+result3 = query3.all()
+for row in result3:
+    print(row[0].id, row[0].name, row[0].fullname, row[1].email_address,
+    row[2].email_address)
+print("-" * 80)
 
 input("\nEnter to continue...")
 
