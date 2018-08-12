@@ -9,7 +9,7 @@
 
 4.  Go inside the virtualenv directory and activate it
     $cd sqlalchemy-pycon2013
-    $source /bin/activate
+    $source ./bin/activate
 
 5.  Install sqlalchemy
     $pip3 install sqlalchemy
